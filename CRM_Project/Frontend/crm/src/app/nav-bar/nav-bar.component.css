@@ -1,0 +1,17 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 100px;
+}
+
+.log-reg{
+    margin: auto 0;
+    gap: 20px;
+    display: inherit;
+}
+
+.log-reg button{
+    padding: 10px;
+}
