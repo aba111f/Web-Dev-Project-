@@ -8,7 +8,8 @@ class Profile(models.Model):
     mail = models.CharField(max_length=255)
     phone_num = models.CharField(max_length=100)
     age = models.IntegerField()
-    PhotoFileName = models.CharField()
+    PhotoFileName = models.CharField(max_length=100)
+    BussinesName=models.CharField(max_length=100)
 
 
 
@@ -23,14 +24,3 @@ class Profile(models.Model):
 
 
 
-
-
-
-# Сен шұлықты теріс киме
-# Сендер шұлықты теріс кимеңдер
-
-# Сіз шұлықты теріс кимеңіз
-# Сіздер шұлықты теріс кимеңіздер
-
-# Ол шұлықты теріс кимесін
-# Олар шұлықты теріс кимесін
