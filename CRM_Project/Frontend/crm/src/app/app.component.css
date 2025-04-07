@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.menu{
+    margin-right: 10px;
+    margin-top: 40px;
+}
+.layout {
+    display: flex;        
+    height: 100vh;        
+  }
+  
+  app-side-bar {
+    width: 250px;          
+    color: white;         
+  }
+  
+  .content {
+    flex: 1;             
+    display: flex;
+    flex-direction: column;
+  }
+  
+  app-nav-bar {
+    color: white;
+  }
+  button{
+    border: none;
+    cursor: pointer;
+    
+  }
+  button svg{
+    width: 30px;
+    height: 25px;
+  }
+  

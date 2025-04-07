@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { HomePageComponent } from './Components/home-page/home-page.component';
+import { LoginPageComponent } from './Components/login-page/login-page.component';
+import { RegistrationPageComponent } from './Components/registration-page/registration-page.component';
+import { ProfilePageComponent } from './Components/profile-page/profile-page.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -14,7 +16,14 @@ export const routes: Routes = [
     },
     {
         path:"registration",
-        component:RegistrationPageComponent
-    }
-    
+        component:ProfilePageComponent
+    },
+    {
+        path: 'profile',
+        component:ProfilePageComponent
+    },
+    {
+        path: 'dashboard',
+        component: DashboardComponent
+    },
 ];

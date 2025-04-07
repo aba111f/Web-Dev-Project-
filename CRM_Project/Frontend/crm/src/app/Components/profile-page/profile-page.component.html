@@ -1,0 +1,57 @@
+<div class="profile-container">
+    <h1 class="profile-header">User Profile</h1>
+    <div class="profile-form">
+      
+      <div class="profile-fields">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" [(ngModel)]="FirstName"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Doe" [(ngModel)]="LastName"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="••••••••" [(ngModel)]="password"/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="john@example.com" [(ngModel)]="mail"/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+1234567890" [(ngModel)]="phone_num"/>
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" placeholder="30" [(ngModel)]="age"/>
+        </div>
+        <div class="form-group">
+          <label>Business Name</label>
+          <input type="text" placeholder="Tech Solutions" [(ngModel)]="BussinesName"/>
+        </div>
+        <div class="image_uploading">
+          <div class="profile-header">
+            <div class="logo-section">
+                <img [src]="'default-logo.png'" alt="Logo" class="logo-img" />
+                <input type="file" id="logo-upload" accept="image/*" [(ngModel)]="logoName"/>
+                <label for="logo-upload" class="upload-btn">Upload Logo</label>
+            </div>
+          </div>
+            <div class="profile-header">
+              <div class="photo-section">
+                <img [src]="'default-logo.png'" alt="profile" class="logo-img" />
+                <input type="file" id="logo-upload"  (change)="uploadPhoto($event)" [(ngModel)]="PhotoFileName"/>
+                <label for="logo-upload" class="upload-btn">Upload photo</label>
+              </div>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="profile-actions">
+      <button class="btn-save" (click)="Register()">Register</button>
+      <button class="btn-cancel" [routerLink]="''">Cancel</button>
+    </div>
+  </div>

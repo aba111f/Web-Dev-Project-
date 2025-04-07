@@ -1,3 +1,17 @@
-<app-nav-bar></app-nav-bar>
-
-<router-outlet></router-outlet>
+<div class="layout">
+    <app-side-bar *ngIf="!isPresed"></app-side-bar>
+    <div class="menu">
+       <button (click)="openCloseSide()" *ngIf="!isPresed"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+        <path d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z"></path>
+        </svg></button>
+        <button (click)="openCloseSide()" *ngIf="isPresed">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25"><path style="fill:#232326" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right"/></svg>
+        </button>
+      
+     </div> 
+    
+    <div class="content">
+      <app-nav-bar></app-nav-bar>
+      <router-outlet></router-outlet> 
+    </div>
+  </div>

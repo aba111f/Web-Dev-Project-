@@ -1,0 +1,215 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* body {
+    background-color: #f5f7fa;
+} */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    height: 70px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 50px;
+}
+
+/* Logo Styles */
+nav > a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Search Bar Styles */
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid #e1e5eb;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #28A3D2;
+    box-shadow: 0 0 0 3px rgba(40, 163, 210, 0.2);
+}
+
+.btn-search {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    background: transparent;
+    border: none;
+    color: #7d8fa1;
+    cursor: pointer;
+    border-radius: 0 6px 6px 0;
+    transition: all 0.2s ease;
+}
+
+.btn-search:hover {
+    color: #28A3D2;
+}
+
+/* User Profile Styles */
+.user-profile {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    padding: 0.5rem 0;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.8rem;
+    border: 2px solid #e1e5eb;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 1rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    z-index: 100;
+}
+
+.user-profile:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu span {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 0.5rem;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    color: #4a5568;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8fafc;
+    color: #28A3D2;
+    padding-left: 1.7rem;
+}
+
+/* Login/Register Buttons */
+.log-reg {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-login,
+.btn-registration {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-login {
+    background: transparent;
+    border: 1px solid #e1e5eb;
+    color: #4a5568;
+}
+
+.btn-login:hover {
+    background: #f8fafc;
+    border-color: #cbd5e0;
+}
+
+.btn-registration {
+    background: #28A3D2;
+    border: 1px solid #28A3D2;
+    color: white;
+}
+
+.btn-registration:hover {
+    background: #1e8ab8;
+    border-color: #1e8ab8;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .search-bar {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 0 1rem;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .search-bar {
+        order: 3;
+        width: 100%;
+        margin: 1rem 0;
+    }
+
+    .log-reg {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .log-reg {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .btn-login,
+    .btn-registration {
+        width: 48%;
+        text-align: center;
+    }
+
+    .user-profile {
+        margin-left: auto;
+    }
+}
