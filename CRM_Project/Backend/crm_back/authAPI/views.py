@@ -79,7 +79,17 @@ class CustomLoginView(APIView):
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
-                    'user_id': user.id
+                    'user_id'       : user.id,
+                    'username'      : user.username,
+                    'FirstName'     : user.FirstName,
+                    'LastName'      : user.LastName,
+                    'password'      : user.password,
+                    'mail'          : user.mail,
+                    'phone_num'     : user.phone_num,
+                    'age'           : user.age,
+                    'PhotoFileName' : user.PhotoFileName,
+                    'BussinesName'  : user.BussinesName,
+                    'logoName'      : user.logoName,
                 })
             else:
                 return Response({'detail': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
