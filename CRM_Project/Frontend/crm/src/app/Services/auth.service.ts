@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Profile } from '../interfaces/profile';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { AuthModel, Token } from '../interfaces/auth-model';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getProfile(id: number):Observable<Profile[]>{
-    return this.http.get<Profile[]>(this.APIUrl + "profiles/" + id);
+    return this.http.get<Profile[]>(this.APIUrl + "api/profiles/" + id);
   }
   
   uploadProfileData(profile: Profile){
@@ -24,8 +24,10 @@ export class AuthService {
     return this.http.post(this.APIUrl+'SaveFile',val);
   }
 
-  logindata(val: any){
-    return this.http.post(this.APIUrl + "LogIn/", val)
+  logindata(authModel: AuthModel):Observable<Token>{
+    return this.http.post<Token>(this.APIUrl + 'login/', authModel);
   }
+
+
 
 }

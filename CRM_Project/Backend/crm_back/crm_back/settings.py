@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'authAPI',
-    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+
 
 ]
 
@@ -78,6 +79,14 @@ TEMPLATES = [
     },
 ]
 
+
+REST_FRAMEWORK={
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 WSGI_APPLICATION = 'crm_back.wsgi.application'
 
 
@@ -86,8 +95,12 @@ WSGI_APPLICATION = 'crm_back.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'crm_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 

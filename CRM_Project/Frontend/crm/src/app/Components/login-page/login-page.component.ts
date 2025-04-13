@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
-
+import { AuthModel } from '../../interfaces/auth-model';
 @Component({
   selector: 'app-login-page',
   imports: [FormsModule],
@@ -9,23 +9,19 @@ import { AuthService } from '../../Services/auth.service';
   styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
-  mail!: string;
-  pass!: string;
+
+  authModel: AuthModel;
 
   constructor(private service: AuthService){
-
+    this.authModel = {} as AuthModel;
   }
   loginData(){
-    var val = {
-      email : this.mail,
-      password: this.pass
-    };
-    // alert(this.mail);
-    this.service.logindata(val).subscribe(res => {
-      alert(res.toString());
+    this.service.logindata(this.authModel).subscribe(token => {
+      console.log(token.refresh);
+      console.log(token.access);
     }
     );
-    this.mail = "";
-    this.pass = "";
+    this.authModel.username = '';
+    this.authModel.password = '';
   } 
 }
