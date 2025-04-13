@@ -42,8 +42,8 @@ class getGraphicsTotalProfit(Graphics):
 class getGraphicsActiveClients(Graphics):
     model = ActiveClient
 
-class getGraphicsQuarterlyRevenue(Graphics):
-    model = QuarterlyRevenue
+# class getGraphicsQuarterlyRevenue(Graphics):
+#     model = QuarterlyRevenue
 
 class getGraphicsActiveProjects(Graphics):
     model = ActiveProject

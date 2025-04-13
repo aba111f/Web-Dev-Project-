@@ -29,12 +29,12 @@ class ActiveClient(models.Model):
     def __str__(self):
         return self.name
 
-class QuarterlyRevenue(models.Model):
-    quarter = models.CharField(max_length=10)
-    revenue = models.FloatField()
+# class QuarterlyRevenue(models.Model):
+#     quarter = models.CharField(max_length=10)
+#     revenue = models.FloatField()
 
-    def __str__(self):
-        return str(self.revenue)
+#     def __str__(self):
+#         return str(self.revenue)
 
 class ActiveProject(models.Model):
     title = models.CharField(max_length=100)
