@@ -15,49 +15,60 @@ import { RouterModule } from '@angular/router';
 export class ProfilePageComponent { 
 
   constructor(private service: AuthService){}
-  profile!: Profile;
-  username: string = "";
-  FirstName: string = "";
-  LastName: string= "";
-  password: string= "";
-  mail: string= "";
-  phone_num: string= "";
-  age!: number;
-  PhotoFileName: string= "";
-  BussinesName: string= "";
-  logoName: string= "";
+  // profile: Profile = {
+  //   id: 0,
+  //   username: "",
+  //   FirstName: "",
+  //   LastName: "",
+  //   password: "",
+  //   mail: "",
+  //   phone_num: "",
+  //   age: 0,
+  //   PhotoFileName: "",
+  //   BussinesName: "",
+  //   logoName: ""
+  // }
+  profile: any = {};
   PhotoFilePath: string = "";
-  Register():void{
-    var value = {
-      username: this.username,
-      FirstName: this.FirstName,
-      LastName: this.LastName,
-      password: this.password,
-      mail: this.mail,
-      phone_num: this.phone_num,
-      age: this.age,
-      PhotoFileName: this.PhotoFileName,
-      BussinesName: this.BussinesName,
-      logoName: this.logoName
+  selectedPhotoFile: File | null = null;
 
-    }
+  uploadPhoto(event: any) {
+    this.selectedPhotoFile = event.target.files[0];
 
-    this.service.uploadProfileData(value).subscribe(res => {
-      alert(res.toString());
-    }
-
-    
-    );
   }
-
-
-  uploadPhoto(event: any){
-    var file = event.target.files[0];
-    const formData: FormData = new FormData();
-    formData.append('uploadedFile', file, file.name);
-    this.service.UploadPhoto(formData).subscribe((data: any) => {
-      this.PhotoFileName = data.toString();
-      this.PhotoFilePath = this.service.PhotoUrl + this.PhotoFileName;
-    });
+  Register(): void {
+   
+      if (this.selectedPhotoFile) {
+        const formData: FormData = new FormData();
+        formData.append('uploadedFile', this.selectedPhotoFile, this.selectedPhotoFile.name);
+        
+        this.service.UploadPhoto(formData).subscribe((data: any) => {
+          this.profile.PhotoFileName = data.toString();
+          this.PhotoFilePath = this.service.PhotoUrl + this.profile.PhotoFileName;
+    
+        
+          this.sendProfileData();
+        });
+      } else {
+        
+        this.sendProfileData();
+      }
+    }
+  
+  
+  sendProfileData(): void {
+    if(this.profile){
+      this.service.uploadProfileData(this.profile).subscribe(res => {
+        alert(res.toString());
+      });
+    }
+    
+    for(let key in this.profile){
+      console.log(`${key}: ${this.profile[key]}`);
+    }
+    alert("empty");
+    
+    
+    
   }
 }

@@ -5,48 +5,48 @@
       <div class="profile-fields">
         <div class="form-group">
           <label>First Name</label>
-          <input type="text" placeholder="John" [(ngModel)]="FirstName"/>
+          <input type="text" placeholder="John" [(ngModel)]="profile.FirstName"/>
         </div>
         <div class="form-group">
           <label>Last Name</label>
-          <input type="text" placeholder="Doe" [(ngModel)]="LastName"/>
+          <input type="text" placeholder="Doe" [(ngModel)]="profile.LastName"/>
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" placeholder="••••••••" [(ngModel)]="password"/>
+          <input type="password" placeholder="••••••••" [(ngModel)]="profile.password"/>
         </div>
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="john@example.com" [(ngModel)]="mail"/>
+          <input type="email" placeholder="john@example.com" [(ngModel)]="profile.mail"/>
         </div>
         <div class="form-group">
           <label>Phone Number</label>
-          <input type="tel" placeholder="+1234567890" [(ngModel)]="phone_num"/>
+          <input type="tel" placeholder="+1234567890" [(ngModel)]="profile.phone_num"/>
         </div>
         <div class="form-group">
           <label>Age</label>
-          <input type="number" placeholder="30" [(ngModel)]="age"/>
+          <input type="number" placeholder="30" [(ngModel)]="profile.age"/>
         </div>
         <div class="form-group">
           <label>Business Name</label>
-          <input type="text" placeholder="Tech Solutions" [(ngModel)]="BussinesName"/>
+          <input type="text" placeholder="Tech Solutions" [(ngModel)]="profile.BussinesName"/>
         </div>
         <div class="form-group">
           <label for="">username</label>
-          <input type="text" placeholder="username" [(ngModel)]="username">
+          <input type="text" placeholder="username" [(ngModel)]="profile.username">
         </div>
         <div class="image_uploading">
           <div class="profile-header">
             <div class="logo-section">
                 <img [src]="PhotoFilePath" alt="" class="logo-img" />
-                <input type="file"  accept="image/*" (change)="uploadPhoto($event)" [(ngModel)]="logoName"/>
+                <input type="file"  accept="image/*" (change)="uploadPhoto($event)" [(ngModel)]="profile.logoName"/>
                 <!-- <label for="logo-upload" class="upload-btn">Upload Logo</label> -->
             </div>
           </div>
             <div class="profile-header">
               <div class="photo-section">
                 <img [src]="PhotoFilePath" alt="" class="logo-img" />
-                <input type="file"   (change)="uploadPhoto($event)" [(ngModel)]="PhotoFileName"/>
+                <input type="file"   (change)="uploadPhoto($event)" [(ngModel)]="profile.PhotoFileName"/>
                 <!-- <label for="logo-upload" class="upload-btn">Upload photo</label> -->
               </div>
             </div>
