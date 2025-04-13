@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   UploadPhoto(val: any){
-    return this.http.post(this.APIUrl+'SaveFile',val);
+    return this.http.post(this.APIUrl+'SaveFile/',val);
   }
 
   logindata(authModel: AuthModel):Observable<Token>{

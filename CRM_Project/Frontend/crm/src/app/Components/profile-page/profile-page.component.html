@@ -34,16 +34,16 @@
         <div class="image_uploading">
           <div class="profile-header">
             <div class="logo-section">
-                <img [src]="'default-logo.png'" alt="Logo" class="logo-img" />
-                <input type="file" id="logo-upload" accept="image/*" [(ngModel)]="logoName"/>
-                <label for="logo-upload" class="upload-btn">Upload Logo</label>
+                <img [src]="PhotoFilePath" alt="" class="logo-img" />
+                <input type="file"  accept="image/*" (change)="uploadPhoto($event)" [(ngModel)]="logoName"/>
+                <!-- <label for="logo-upload" class="upload-btn">Upload Logo</label> -->
             </div>
           </div>
             <div class="profile-header">
               <div class="photo-section">
-                <img [src]="'default-logo.png'" alt="profile" class="logo-img" />
-                <input type="file" id="logo-upload"  (change)="uploadPhoto($event)" [(ngModel)]="PhotoFileName"/>
-                <label for="logo-upload" class="upload-btn">Upload photo</label>
+                <img [src]="PhotoFilePath" alt="" class="logo-img" />
+                <input type="file"   (change)="uploadPhoto($event)" [(ngModel)]="PhotoFileName"/>
+                <!-- <label for="logo-upload" class="upload-btn">Upload photo</label> -->
               </div>
             </div>
         </div>
