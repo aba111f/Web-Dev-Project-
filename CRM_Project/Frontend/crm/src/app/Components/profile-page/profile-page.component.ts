@@ -16,7 +16,7 @@ export class ProfilePageComponent {
 
   constructor(private service: AuthService){}
   profile!: Profile;
-
+  username: string = "";
   FirstName: string = "";
   LastName: string= "";
   password: string= "";
@@ -29,7 +29,7 @@ export class ProfilePageComponent {
   PhotoFilePath: string = "";
   Register():void{
     var value = {
-
+      username: this.username,
       FirstName: this.FirstName,
       LastName: this.LastName,
       password: this.password,

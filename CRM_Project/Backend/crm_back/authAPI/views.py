@@ -23,7 +23,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 class DataProfile(generics.CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = SerializerProfile
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
 class getUser(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
