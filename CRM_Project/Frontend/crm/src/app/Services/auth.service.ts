@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   logindata(authModel: AuthModel):Observable<Token>{
-    return this.http.post<Token>(this.APIUrl + 'login/', authModel);
+    return this.http.post<Token>(this.APIUrl + 'api/login/', authModel);
   }
 
 
