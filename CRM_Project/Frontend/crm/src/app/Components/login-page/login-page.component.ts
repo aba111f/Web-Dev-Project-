@@ -17,8 +17,8 @@ export class LoginPageComponent {
   }
   loginData(){
     this.service.logindata(this.authModel).subscribe(token => {
-      console.log(token.refresh);
-      console.log(token.access);
+      localStorage.setItem('access', token.access);
+      localStorage.setItem('refresh', token.refresh);
     }
     );
     this.authModel.username = '';

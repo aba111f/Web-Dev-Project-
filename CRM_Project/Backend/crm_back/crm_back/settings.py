@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
 ]
 
-CORS_ORIGIN_WHITELIST = ["https://localhost:4200"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:4200"]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
