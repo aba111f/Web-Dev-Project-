@@ -112,10 +112,10 @@
 .logo-img {
     width: 150px;
     height: 150px;
-    border-radius: 50%;
+    /* border-radius: 50%;
     object-fit: cover;
     border: 2px solid #ddd;
-    margin-bottom: 15px;
+    margin-bottom: 15px; */
 }
 
 .upload-btn {

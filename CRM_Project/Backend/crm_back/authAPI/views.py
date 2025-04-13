@@ -49,8 +49,12 @@ class getGraphicsActiveClients(Graphics):
 class getGraphicsActiveProjects(Graphics):
     model = ActiveProject
 
-@csrf_exempt
+@api_view(['POST'])
+# @permission_classes(['AllowAny'])
 def SaveFile(request):
+    if 'uploadedFile' not in request.FILES:
+        return Response({"error": "No file uploaded"}, status=400)
+    
     file = request.FILES['uploadedFile']
-    file_name = default_storage.save(file.name, file)  
-    return JsonResponse(file_name, safe=False)
+    file_name = default_storage.save(file.name, file)
+    return Response({"filename": file_name})

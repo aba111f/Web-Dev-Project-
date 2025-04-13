@@ -11,5 +11,5 @@ urlpatterns = [
     path('Graphics/ActiveProjects/',getGraphicsActiveProjects.as_view()),
     # path('Graphics/QuarterlyRevenue/',getGraphicsQuarterlyRevenue.as_view()),
     path('Graphics/TotalProfit/',getGraphicsTotalProfit.as_view()),
-    re_path(r'^SaveFile$', SaveFile),
+    path('files/upload/', SaveFile),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
