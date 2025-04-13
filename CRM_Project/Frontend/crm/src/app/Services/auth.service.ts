@@ -17,7 +17,7 @@ export class AuthService {
   }
   
   uploadProfileData(profile: Profile){
-    return this.http.post(this.APIUrl, profile);
+    return this.http.post(this.APIUrl+'api/profiles/', profile);
   }
 
   UploadPhoto(val: any){
