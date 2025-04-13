@@ -10,6 +10,13 @@ from .models import *
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from django.contrib.auth.hashers import check_password
+from .models import Profile
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
 
 # Create your views here.
 # @api_view(['POST'])
@@ -58,3 +65,23 @@ def SaveFile(request):
     file = request.FILES['uploadedFile']
     file_name = default_storage.save(file.name, file)
     return Response({"filename": file_name})
+
+
+class CustomLoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        try:
+            user = Profile.objects.get(username=username)
+            if user.password == password:
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                    'user_id': user.id
+                })
+            else:
+                return Response({'detail': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
+        except Profile.DoesNotExist:
+            return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

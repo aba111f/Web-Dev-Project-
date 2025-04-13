@@ -9,7 +9,7 @@ urlpatterns = [
     path('getData/', DataProfile.as_view()),
     path('Graphics/ActiveClients/',getGraphicsActiveClients.as_view()),
     path('Graphics/ActiveProjects/',getGraphicsActiveProjects.as_view()),
-    # path('Graphics/QuarterlyRevenue/',getGraphicsQuarterlyRevenue.as_view()),
-    path('Graphics/TotalProfit/',getGraphicsTotalProfit.as_view()),
+    path('Graphics/TotalProfit/',getGraphicsTotalProfit.as_view(), name='login'),
+    path('login/', CustomLoginView.as_view()),
     path('files/upload/', SaveFile),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
