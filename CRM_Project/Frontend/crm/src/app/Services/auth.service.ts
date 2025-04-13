@@ -13,8 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getProfile(id: number):Observable<Profile[]>{
-    let access = localStorage.getItem('access');
-    return this.http.get<Profile[]>(this.APIUrl + "api/profiles/" + id, {headers: {"Authorization": `Bearer ${access}`}});
+    return this.http.get<Profile[]>(this.APIUrl + "api/profiles/" + id);
   }
   
   uploadProfileData(profile: Profile){
