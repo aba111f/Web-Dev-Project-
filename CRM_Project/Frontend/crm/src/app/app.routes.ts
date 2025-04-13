@@ -4,6 +4,7 @@ import { LoginPageComponent } from './Components/login-page/login-page.component
 import { RegistrationPageComponent } from './Components/registration-page/registration-page.component';
 import { ProfilePageComponent } from './Components/profile-page/profile-page.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { ProfitGraphComponent } from './Components/profit-graph/profit-graph.component';
 
 export const routes: Routes = [
     {
@@ -26,4 +27,8 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent
     },
+    {
+        path:'profit',
+        component: ProfitGraphComponent
+    }
 ];
