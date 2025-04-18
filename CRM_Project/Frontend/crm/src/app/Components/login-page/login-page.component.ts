@@ -23,5 +23,6 @@ export class LoginPageComponent {
     );
     this.authModel.username = '';
     this.authModel.password = '';
+
   } 
 }
