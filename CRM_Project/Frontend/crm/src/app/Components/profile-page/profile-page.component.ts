@@ -15,59 +15,55 @@ import { RouterModule } from '@angular/router';
 export class ProfilePageComponent { 
 
   constructor(private service: AuthService){}
-  // profile: Profile = {
-  //   id: 0,
-  //   username: "",
-  //   FirstName: "",
-  //   LastName: "",
-  //   password: "",
-  //   mail: "",
-  //   phone_num: "",
-  //   age: 0,
-  //   PhotoFileName: "",
-  //   BussinesName: "",
-  //   logoName: ""
-  // }
-  profile: any = {};
-  PhotoFilePath: string = "";
-  selectedPhotoFile: File | null = null;
-
-  uploadPhoto(event: any) {
-    this.selectedPhotoFile = event.target.files[0];
-
+  profile: Profile = {
+    id: 0,
+    username: "",
+    FirstName: "",
+    LastName: "",
+    password: "",
+    mail: "",
+    phone_num: "",
+    age: 0,
+    PhotoFile: null,
+    BussinesName: "",
+    logoFile: null
   }
-  Register(): void {
-   
-      if (this.selectedPhotoFile) {
-        const formData: FormData = new FormData();
-        formData.append('uploadedFile', this.selectedPhotoFile, this.selectedPhotoFile.name);
-        
-        this.service.UploadPhoto(formData).subscribe((data: any) => {
-          this.profile.PhotoFileName = data.toString();
-          this.PhotoFilePath = this.service.PhotoUrl + this.profile.PhotoFileName;
-    
-        
-          this.sendProfileData();
-        });
-      } else {
-        
-        this.sendProfileData();
-      }
+  // logoFile: File | null = null;
+  // photoFile: File | null = null;
+  PhotoFilePath: string = "";
+
+
+  onSelectedLogo(event: any){
+    const file: File = event.target.files[0];
+    if(file){
+      this.profile.logoFile = file;
+      console.log(this.profile.logoFile);
     }
+  }
+  onSelectedPhoto(event: any){
+    const file: File = event.target.files[0];
+    if(file){
+      this.profile.PhotoFile = file;
+      console.log(this.profile.logoFile);
+    }
+  }
+  
+  Register(): void {
+
+    this.sendProfileData();
+  }
   
   
   sendProfileData(): void {
+
     if(this.profile){
       this.service.uploadProfileData(this.profile).subscribe(res => {
         alert(res.toString());
       });
     }
-    
-    for(let key in this.profile){
-      console.log(`${key}: ${this.profile[key]}`);
+    else{
+      alert("it's empty!!!!")
     }
-    alert("empty");
-    
     
     
   }

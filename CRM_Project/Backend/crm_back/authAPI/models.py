@@ -9,9 +9,9 @@ class Profile(models.Model):
     mail = models.EmailField(max_length=255)
     phone_num = models.CharField(max_length=100)
     age = models.IntegerField()
-    PhotoFileName = models.CharField(max_length=100)
+    PhotoFileName = models.ImageField(upload_to='images/photo/')
     BussinesName=models.CharField(max_length=100)
-    logoName=models.CharField(max_length=100)
+    logoName=models.ImageField(upload_to='images/logo/')
 
     def __str__(self):
         return f"{self.FirstName} {self.LastName}"

@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': 'crm_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': '192.168.1.188',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
