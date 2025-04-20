@@ -14,7 +14,7 @@ print("DB_NAME:", os.getenv('DJANGO_DB_NAME'))
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
-
+print(MEDIA_ROOT)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/

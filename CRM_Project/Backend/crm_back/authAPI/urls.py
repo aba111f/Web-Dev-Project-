@@ -12,4 +12,5 @@ urlpatterns = [
     path('Graphics/TotalProfit/',getGraphicsTotalProfit.as_view(), name='login'),
     path('login/', CustomLoginView.as_view()),
     path('files/upload/', SaveFile),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

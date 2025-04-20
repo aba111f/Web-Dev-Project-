@@ -87,9 +87,6 @@ class CustomLoginView(APIView):
                     'mail'          : user.mail,
                     'phone_num'     : user.phone_num,
                     'age'           : user.age,
-                    'PhotoFileName' : user.PhotoFileName,
-                    'BussinesName'  : user.BussinesName,
-                    'logoName'      : user.logoName,
                 })
             else:
                 return Response({'detail': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
