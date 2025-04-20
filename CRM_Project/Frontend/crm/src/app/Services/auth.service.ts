@@ -45,4 +45,7 @@ export class AuthService {
     return this.isAuthenticatedSubject.value;
   }
 
+  getToken(): string {
+    return localStorage.getItem('access_token') || '';
+  }
 }

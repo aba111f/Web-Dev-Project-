@@ -1,92 +1,102 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Profile } from '../../interfaces/profile';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
-import { RouterModule } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginPageComponent } from '../login-page/login-page.component';
 
 @Component({
-  standalone: true,
   selector: 'app-profile-page',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css'],
-  imports: [CommonModule, FormsModule,RouterModule]
 })
-export class ProfilePageComponent { 
-  constructor(private service: AuthService){}
-  profile: Profile = {
-    id: 0,
-    username: "",
-    FirstName: "",
-    LastName: "",
-    password: "",
-    mail: "",
-    phone_num: "",
-    age: 0,
-    PhotoFile: null,
-    BussinesName: "",
-    logoFile: null
-  }
-  // logoFile: File | null = null;
-  // photoFile: File | null = null;
-  PhotoFilePath: string = "";
-  logoPreviewPath: string = "";
-  photoPreviewPath: string = "";
+export class ProfilePageComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private http = inject(HttpClient);
+  private log=inject(LoginPageComponent);
+  form!: FormGroup;
+  profileId!: number;
+  photoPreview: string | ArrayBuffer | null = null;
+  logoPreview: string | ArrayBuffer | null = null;
 
-  onSelectedLogo(event: any){
-    const file: File = event.target.files[0];
-    if(file){
-      this.profile.logoFile = file;
-      console.log(this.profile.logoFile);
-      this.logoPreviewPath = URL.createObjectURL(file);
-    }
-  }
-  onSelectedPhoto(event: any){
-    const file: File = event.target.files[0];
-    if(file){
-      this.profile.PhotoFile = file;
-      console.log(this.profile.logoFile);
-      this.photoPreviewPath = URL.createObjectURL(file);
-    }
-  }
-  
-  Register(): void {
+  ngOnInit() {
+    this.form = this.fb.group({
+      username: [''],
+      FirstName: [''],
+      LastName: [''],
+      password: [''],
+      mail: [''],
+      phone_num: [''],
+      age: [null],
+      PhotoFile: [null],
+      BussinesName: [''],
+      logoFile: [null],
+    });
 
-    this.sendProfileData();
+    this.loadProfile();
   }
-  
-  
-  sendProfileData(): void {
-    // if(this.profile){
-    //   alert("profile is good");
-    // }
+
+  loadProfile() {
+    this.authService.getProfile(this.log.getID()).subscribe((data: any) => {
+      this.profileId = data.id;
+      this.form.patchValue(data);
+    });
+  }
+
+  onPhotoChange(event: any) {
+    const file = event.target.files[0];
+    this.form.patchValue({ PhotoFile: file });
+
+    const reader = new FileReader();
+    reader.onload = () => (this.photoPreview = reader.result);
+    reader.readAsDataURL(file);
+  }
+
+  onLogoChange(event: any) {
+    const file = event.target.files[0];
+    this.form.patchValue({ logoFile: file });
+
+    const reader = new FileReader();
+    reader.onload = () => (this.logoPreview = reader.result);
+    reader.readAsDataURL(file);
+  }
+
+  submit() {
     const formData = new FormData();
-    formData.append('username', this.profile.username);
-    formData.append('FirstName', this.profile.FirstName);
-    formData.append('LastName', this.profile.LastName);
-    formData.append('password', this.profile.password);
-    formData.append('mail', this.profile.mail);
-    formData.append('phone_num', this.profile.phone_num);
-    formData.append('age', this.profile.age.toString());
-    formData.append('BussinesName', this.profile.BussinesName);
-    if(this.profile.PhotoFile){
-    formData.append('PhotoFileName', this.profile.PhotoFile, this.profile.PhotoFile.name);
+    const formValue = this.form.value;
+  
+    // Явно добавляем строковые и числовые поля
+    if (formValue.username) formData.append('username', formValue.username);
+    if (formValue.FirstName) formData.append('FirstName', formValue.FirstName);
+    if (formValue.LastName) formData.append('LastName', formValue.LastName);
+    if (formValue.password) formData.append('password', formValue.password);
+    if (formValue.mail) formData.append('mail', formValue.mail);
+    if (formValue.phone_num) formData.append('phone_num', formValue.phone_num);
+    if (formValue.age !== null && formValue.age !== undefined) {
+      formData.append('age', formValue.age.toString());
     }
-    if(this.profile.logoFile){
-      formData.append('logoName', this.profile.logoFile, this.profile.logoFile.name);
+    if (formValue.BussinesName) formData.append('BussinesName', formValue.BussinesName);
+  
+    // Добавляем файлы только если они есть
+    if (formValue.PhotoFile instanceof File) {
+      formData.append('PhotoFile', formValue.PhotoFile);
     }
-
-    this.service.uploadProfileData(formData).subscribe({
-      next: (res) => {
-        alert("Profile created successfully!");
-        console.log(res);
-      },
-      error: (err) => {
-        alert("Failed to create profile.");
-        console.log(
-          "UPload error: ", err
-        );
-      }
+    if (formValue.logoFile instanceof File) {
+      formData.append('logoFile', formValue.logoFile);
+    }
+  
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.authService.getToken()}`
+    });
+  
+    this.http.put(
+      `http://localhost:8000/api/profiles/${this.profileId}/`,
+      formData,
+      { headers }
+    ).subscribe(() => {
+      alert('Профиль обновлён!');
     });
   }
 }

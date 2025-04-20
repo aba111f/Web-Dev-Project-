@@ -79,16 +79,11 @@ class CustomLoginView(APIView):
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
-                    'user_id'       : user.id,
-                    'username'      : user.username,
-                    'FirstName'     : user.FirstName,
-                    'LastName'      : user.LastName,
-                    'password'      : user.password,
-                    'mail'          : user.mail,
-                    'phone_num'     : user.phone_num,
-                    'age'           : user.age,
+                    'user_id': user.id
                 })
             else:
                 return Response({'detail': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
         except Profile.DoesNotExist:
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+
