@@ -2,8 +2,9 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR.parent.parent / '.env')
+load_dotenv(BASE_DIR.parents[3] / '.env')
 
 print("DB_NAME:", os.getenv('DJANGO_DB_NAME'))
 
