@@ -17,7 +17,7 @@ export const routes: Routes = [
     },
     {
         path:"registration",
-        component:ProfilePageComponent
+        component:RegistrationPageComponent
     },
     {
         path: 'profile',

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../Services/auth.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-registration-page',
   imports: [CommonModule, FormsModule,RouterModule],
@@ -11,7 +11,8 @@ import { RouterModule } from '@angular/router';
   styleUrl: './registration-page.component.css'
 })
 export class RegistrationPageComponent {
-  constructor(private service: AuthService){}
+
+  constructor(private service: AuthService, private router: Router){}
     profile: Profile = {
       id: 0,
       username: "",
@@ -51,6 +52,8 @@ export class RegistrationPageComponent {
     Register(): void {
   
       this.sendProfileData();
+
+      
     }
     
     
@@ -76,8 +79,10 @@ export class RegistrationPageComponent {
   
       this.service.uploadProfileData(formData).subscribe({
         next: (res) => {
+          this.router.navigate(['/login']);
           alert("Profile created successfully!");
           console.log(res);
+          
         },
         error: (err) => {
           alert("Failed to create profile.");
