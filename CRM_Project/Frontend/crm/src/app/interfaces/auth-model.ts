@@ -6,5 +6,5 @@ export interface AuthModel {
 export interface Token {
     refresh: string;
     access: string;
-    id:number;
+    user_id:number;
 }

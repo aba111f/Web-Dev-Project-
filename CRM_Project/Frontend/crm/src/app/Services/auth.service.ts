@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Profile } from '../interfaces/profile';
 import { HttpClient } from '@angular/common/http';
-import { Observable,BehaviorSubject } from 'rxjs';
+import { Observable,BehaviorSubject, tap } from 'rxjs';
 import { AuthModel, Token } from '../interfaces/auth-model';
 
 @Injectable({
@@ -14,6 +14,17 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   
+  private id!:number;
+
+  setID(id: number) {
+    alert(id);
+    this.id = id;
+  }
+
+
+  getID(): number {
+    return this.id;
+  }
   constructor(private http: HttpClient) {
     this.checkInitialAuthState();
   }
@@ -23,17 +34,25 @@ export class AuthService {
     this.isAuthenticatedSubject.next(!!token);
   }
 
-  getProfile(id: number):Observable<Profile[]>{
-    return this.http.get<Profile[]>(this.APIUrl + "api/profiles/" + id);
+  getProfile(id: number):Observable<Profile>{
+    
+    return this.http.get<Profile>(this.APIUrl + "api/profiles/" + id+"/");
   }
   
+  
+
   uploadProfileData(profile: FormData){
     return this.http.post(this.APIUrl+'api/profiles/', profile);
   }
 
 
-  logindata(authModel: AuthModel):Observable<Token>{
-    return this.http.post<Token>(this.APIUrl + 'api/login/', authModel);
+  logindata(authModel: AuthModel): Observable<Token> {
+    return this.http.post<Token>(this.APIUrl + 'api/login/', authModel).pipe(
+      tap((token: Token) => {
+        localStorage.setItem('access', token.access);
+        localStorage.setItem('refresh', token.refresh);
+      })
+    );
   }
 
   logout() {

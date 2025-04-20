@@ -22,10 +22,10 @@ export class LoginPageComponent {
     
   }
   loginData(){
+    alert("TEST!");
     this.service.logindata(this.authModel).subscribe(token => {
-      localStorage.setItem('access', token.access);
-      localStorage.setItem('refresh', token.refresh);
-      this.token=token;
+     
+      this.service.setID(token.user_id);
       this.router.navigate(['/profile']);
 
     }
@@ -35,8 +35,5 @@ export class LoginPageComponent {
     this.authModel.password = '';
 
   } 
-  getID():number{
-    console.log(this.token.id);
-    return this.token.id;
-  }
+ 
 }

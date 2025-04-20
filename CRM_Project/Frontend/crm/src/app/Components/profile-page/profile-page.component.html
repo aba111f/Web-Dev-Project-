@@ -1,55 +1,34 @@
-<form [formGroup]="form" (ngSubmit)="submit()" enctype="multipart/form-data">
-  <div>
-    <label>Username</label>
-    <input formControlName="username" type="text" />
+<div class="profile-container">
+  <div class="profile-header">
+    <h2>Ваш профиль</h2>
   </div>
-
-  <div>
-    <label>First Name</label>
-    <input formControlName="FirstName" type="text" />
+  
+  <div class="profile-data">
+    <div class="profile-item">
+      <strong>Имя:</strong> {{ form.value.FirstName }}
+    </div>
+    <div class="profile-item">
+      <strong>Фамилия:</strong> {{ form.value.LastName }}
+    </div>
+    <div class="profile-item">
+      <strong>Почта:</strong> {{ form.value.mail }}
+    </div>
+    <div class="profile-item">
+      <strong>Номер телефона:</strong> {{ form.value.phone_num }}
+    </div>
+    <div class="profile-item">
+      <strong>Возраст:</strong> {{ form.value.age }}
+    </div>
+    <div class="profile-item">
+      <strong>Имя бизнеса:</strong> {{ form.value.BussinesName }}
+    </div>
+    <div class="profile-item">
+      <strong>Фото:</strong> 
+      <img *ngIf="form.value.PhotoFile" [src]="photoPreview" alt="Фото профиля" class="profile-photo" />
+    </div>
+    <div class="profile-item">
+      <strong>Логотип:</strong> 
+      <img *ngIf="form.value.logoFile" [src]="logoPreview" alt="Логотип" class="profile-logo" />
+    </div>
   </div>
-
-  <div>
-    <label>Last Name</label>
-    <input formControlName="LastName" type="text" />
-  </div>
-
-  <div>
-    <label>Password</label>
-    <input formControlName="password" type="password" />
-  </div>
-
-  <div>
-    <label>Email</label>
-    <input formControlName="mail" type="email" />
-  </div>
-
-  <div>
-    <label>Phone</label>
-    <input formControlName="phone_num" type="text" />
-  </div>
-
-  <div>
-    <label>Age</label>
-    <input formControlName="age" type="number" />
-  </div>
-
-  <div>
-    <label>Photo</label>
-    <input type="file" (change)="onPhotoChange($event)" />
-    <img *ngIf="photoPreview" [src]="photoPreview" width="100" />
-  </div>
-
-  <div>
-    <label>Business Name</label>
-    <input formControlName="BussinesName" type="text" />
-  </div>
-
-  <div>
-    <label>Logo</label>
-    <input type="file" (change)="onLogoChange($event)" />
-    <img *ngIf="logoPreview" [src]="logoPreview" width="100" />
-  </div>
-
-  <button type="submit">Сохранить</button>
-</form>
+</div>

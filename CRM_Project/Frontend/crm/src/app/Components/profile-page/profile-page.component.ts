@@ -15,34 +15,38 @@ export class ProfilePageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private http = inject(HttpClient);
-  private log=inject(LoginPageComponent);
+
   form!: FormGroup;
-  profileId!: number;
+  profileId: number=this.authService.getID();
   photoPreview: string | ArrayBuffer | null = null;
   logoPreview: string | ArrayBuffer | null = null;
 
   ngOnInit() {
     this.form = this.fb.group({
-      username: [''],
-      FirstName: [''],
-      LastName: [''],
-      password: [''],
-      mail: [''],
-      phone_num: [''],
-      age: [null],
-      PhotoFile: [null],
-      BussinesName: [''],
-      logoFile: [null],
+      username: '',
+      FirstName: '',
+      LastName: '',
+      password: '',
+      mail: '',
+      phone_num: '',
+      age: null,
+      PhotoFile: null,
+      BussinesName: '',
+      logoFile: null,
     });
 
     this.loadProfile();
   }
 
   loadProfile() {
-    this.authService.getProfile(this.log.getID()).subscribe((data: any) => {
-      this.profileId = data.id;
-      this.form.patchValue(data);
-    });
+    alert("MUAUAUUAU");
+    if (this.profileId) {
+      this.authService.getProfile(this.profileId).subscribe((data: any) => {
+        this.form.patchValue(data);
+        this.photoPreview = data.PhotoFile ? URL.createObjectURL(data.PhotoFile) : null;
+        this.logoPreview = data.logoFile ? URL.createObjectURL(data.logoFile) : null;
+      });
+    }
   }
 
   onPhotoChange(event: any) {
@@ -67,7 +71,6 @@ export class ProfilePageComponent implements OnInit {
     const formData = new FormData();
     const formValue = this.form.value;
   
-    // Явно добавляем строковые и числовые поля
     if (formValue.username) formData.append('username', formValue.username);
     if (formValue.FirstName) formData.append('FirstName', formValue.FirstName);
     if (formValue.LastName) formData.append('LastName', formValue.LastName);
@@ -79,7 +82,7 @@ export class ProfilePageComponent implements OnInit {
     }
     if (formValue.BussinesName) formData.append('BussinesName', formValue.BussinesName);
   
-    // Добавляем файлы только если они есть
+
     if (formValue.PhotoFile instanceof File) {
       formData.append('PhotoFile', formValue.PhotoFile);
     }
@@ -87,16 +90,6 @@ export class ProfilePageComponent implements OnInit {
       formData.append('logoFile', formValue.logoFile);
     }
   
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.authService.getToken()}`
-    });
-  
-    this.http.put(
-      `http://localhost:8000/api/profiles/${this.profileId}/`,
-      formData,
-      { headers }
-    ).subscribe(() => {
-      alert('Профиль обновлён!');
-    });
+    
   }
 }

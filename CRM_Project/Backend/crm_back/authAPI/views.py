@@ -29,12 +29,12 @@ class getUser(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class=SerializerProfile
     lookup_field="id"
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
 
 class Graphics(generics.GenericAPIView):
     model = None
-
+    # permission_classes = (IsAuthenticated,)
     def get(self, request):
         if self.model is None:
             return Response({"error": "Model is not defined."}, status=500)
@@ -46,28 +46,32 @@ class Graphics(generics.GenericAPIView):
 
 class getGraphicsTotalProfit(Graphics):
     model = TotalProfit
+    # permission_classes = (IsAuthenticated,)
 
 class getGraphicsActiveClients(Graphics):
     model = ActiveClient
+    # permission_classes = (IsAuthenticated,)
 
 # class getGraphicsQuarterlyRevenue(Graphics):
 #     model = QuarterlyRevenue
 
 class getGraphicsActiveProjects(Graphics):
     model = ActiveProject
+    # permission_classes = (IsAuthenticated,)
 
-@api_view(['POST'])
+# @api_view(['POST'])
 # @permission_classes(['AllowAny'])
-def SaveFile(request):
-    if 'uploadedFile' not in request.FILES:
-        return Response({"error": "No file uploaded"}, status=400)
+# def SaveFile(request):
+#     if 'uploadedFile' not in request.FILES:
+#         return Response({"error": "No file uploaded"}, status=400)
     
-    file = request.FILES['uploadedFile']
-    file_name = default_storage.save(file.name, file)
-    return Response({"filename": file_name})
+#     file = request.FILES['uploadedFile']
+#     file_name = default_storage.save(file.name, file)
+#     return Response({"filename": file_name})
 
 
 class CustomLoginView(APIView):
+    
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
