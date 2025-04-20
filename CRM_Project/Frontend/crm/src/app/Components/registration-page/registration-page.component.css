@@ -138,3 +138,6 @@
 /* #logo-upload {
     display: none;
 } */
+.error{
+    color: red;
+}

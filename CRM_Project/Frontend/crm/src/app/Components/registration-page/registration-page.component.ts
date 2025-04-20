@@ -4,14 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../Services/auth.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Errors } from '../../interfaces/registerErrors';
+import { PassValidatorDirective } from '../../Validators/pass-validator.directive';
+
 @Component({
   selector: 'app-registration-page',
-  imports: [CommonModule, FormsModule,RouterModule],
+  imports: [CommonModule, FormsModule,RouterModule, PassValidatorDirective],
   templateUrl: './registration-page.component.html',
   styleUrl: './registration-page.component.css'
 })
 export class RegistrationPageComponent {
-
+  errMessage: string = "";
+  err: Errors = {
+    e_mail: "",
+    e_phone: "",
+    e_username: "" 
+  };  
   constructor(private service: AuthService, private router: Router){}
     profile: Profile = {
       id: 0,
@@ -26,8 +34,6 @@ export class RegistrationPageComponent {
       BussinesName: "",
       logoFile: null
     }
-    // logoFile: File | null = null;
-    // photoFile: File | null = null;
     PhotoFilePath: string = "";
     logoPreviewPath: string = "";
     photoPreviewPath: string = "";
@@ -85,10 +91,22 @@ export class RegistrationPageComponent {
           
         },
         error: (err) => {
-          alert("Failed to create profile.");
-          console.log(
-            "UPload error: ", err
-          );
+          if(err.status === 400){
+            let message = err.error.username?.[0] || "Произошла ошибка";
+            // alert("Ошибка: " + message);
+            this.err.e_username = message;
+            message = err.error.mail?.[0] || "Произошла ошибка";
+            this.err.e_mail = message;
+
+            message = err.error.phone_num?.[0] || "Произошла ошибка";
+            this.err.e_phone = message;
+          } 
+          else{
+            alert("Failed to create profile.");
+            console.log(
+              "UPload error: ", err
+            );
+          }
         }
       });
     }
