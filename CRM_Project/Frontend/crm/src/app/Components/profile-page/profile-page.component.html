@@ -38,14 +38,14 @@
         <div class="image_uploading">
           <div class="profile-header">
             <div class="logo-section">
-                <img [src]="PhotoFilePath" alt="" class="logo-img" />
+                <img [src]="logoPreviewPath" alt="" class="logo-img" />
                 <input type="file"  accept="image/*" (change)="onSelectedLogo($event)"/>
                 <!-- <label for="logo-upload" class="upload-btn">Upload Logo</label> -->
             </div>
           </div>
             <div class="profile-header">
               <div class="photo-section">
-                <img [src]="PhotoFilePath" alt="" class="logo-img" />
+                <img [src]="photoPreviewPath" alt="" class="logo-img" />
                 <input type="file" (change)="onSelectedPhoto($event)" accept="image/*" />
                 <!-- <label for="logo-upload" class="upload-btn">Upload photo</label> -->
               </div>

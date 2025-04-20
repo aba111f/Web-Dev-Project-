@@ -27,13 +27,10 @@ export class AuthService {
     return this.http.get<Profile[]>(this.APIUrl + "api/profiles/" + id);
   }
   
-  uploadProfileData(profile: Profile){
+  uploadProfileData(profile: FormData){
     return this.http.post(this.APIUrl+'api/profiles/', profile);
   }
 
-  UploadPhoto(val: any){
-    return this.http.post(this.APIUrl+'api/files/upload/',val);
-  }
 
   logindata(authModel: AuthModel):Observable<Token>{
     return this.http.post<Token>(this.APIUrl + 'api/login/', authModel);

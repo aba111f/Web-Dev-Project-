@@ -31,13 +31,15 @@ export class ProfilePageComponent {
   // logoFile: File | null = null;
   // photoFile: File | null = null;
   PhotoFilePath: string = "";
-
+  logoPreviewPath: string = "";
+  photoPreviewPath: string = "";
 
   onSelectedLogo(event: any){
     const file: File = event.target.files[0];
     if(file){
       this.profile.logoFile = file;
       console.log(this.profile.logoFile);
+      this.logoPreviewPath = URL.createObjectURL(file);
     }
   }
   onSelectedPhoto(event: any){
@@ -45,6 +47,7 @@ export class ProfilePageComponent {
     if(file){
       this.profile.PhotoFile = file;
       console.log(this.profile.logoFile);
+      this.photoPreviewPath = URL.createObjectURL(file);
     }
   }
   
@@ -55,16 +58,36 @@ export class ProfilePageComponent {
   
   
   sendProfileData(): void {
+    // if(this.profile){
+    //   alert("profile is good");
+    // }
+    const formData = new FormData();
+    formData.append('username', this.profile.username);
+    formData.append('FirstName', this.profile.FirstName);
+    formData.append('LastName', this.profile.LastName);
+    formData.append('password', this.profile.password);
+    formData.append('mail', this.profile.mail);
+    formData.append('phone_num', this.profile.phone_num);
+    formData.append('age', this.profile.age.toString());
+    formData.append('BussinesName', this.profile.BussinesName);
+    if(this.profile.PhotoFile){
+    formData.append('PhotoFileName', this.profile.PhotoFile, this.profile.PhotoFile.name);
+    }
+    if(this.profile.logoFile){
+      formData.append('logoName', this.profile.logoFile, this.profile.logoFile.name);
+    }
 
-    if(this.profile){
-      this.service.uploadProfileData(this.profile).subscribe(res => {
-        alert(res.toString());
-      });
-    }
-    else{
-      alert("it's empty!!!!")
-    }
-    
-    
+    this.service.uploadProfileData(formData).subscribe({
+      next: (res) => {
+        alert("Profile created successfully!");
+        console.log(res);
+      },
+      error: (err) => {
+        alert("Failed to create profile.");
+        console.log(
+          "UPload error: ", err
+        );
+      }
+    });
   }
 }
