@@ -1,5 +1,5 @@
 <div class="profile-container">
-    <h1 class="profile-header">User Profile</h1>
+    <h1 class="profile-header">Register</h1>
     <div class="profile-form">
       
       <div class="profile-fields">
@@ -13,15 +13,24 @@
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" placeholder="••••••••" [(ngModel)]="profile.password"/>
+          <input type="password" placeholder="••••••••" [(ngModel)]="profile.password" appPassValidator name="password" #password="ngModel" minlength="8" required/>
+          
+          <div class="error" *ngIf="password.invalid && password.touched">
+            <small *ngIf="password.errors?.['required']">Password is required.</small>
+            <small *ngIf="password.errors?.['minlength']">Minimum 8 characters required.</small>
+            <small *ngIf="password.errors?.['uppercase']">At least one capital letter required.</small>
+          </div>
+
         </div>
         <div class="form-group">
           <label>Email</label>
           <input type="email" placeholder="john@example.com" [(ngModel)]="profile.mail"/>
+          <span style="color: red;">{{ err.e_mail }}</span>
         </div>
         <div class="form-group">
           <label>Phone Number</label>
           <input type="tel" placeholder="+1234567890" [(ngModel)]="profile.phone_num"/>
+          <span style="color: red;">{{ err.e_phone }}</span>
         </div>
         <div class="form-group">
           <label>Age</label>
@@ -34,16 +43,20 @@
         <div class="form-group">
           <label for="">username</label>
           <input type="text" placeholder="username" [(ngModel)]="profile.username">
+          <span style="color: red;">{{ err.e_username }}</span>
         </div>
         <div class="image_uploading">
           <div class="profile-header">
+            <small>company Logo</small>
             <div class="logo-section">
+                
                 <img [src]="logoPreviewPath" alt="" class="logo-img" />
                 <input type="file"  accept="image/*" (change)="onSelectedLogo($event)"/>
                 <!-- <label for="logo-upload" class="upload-btn">Upload Logo</label> -->
             </div>
           </div>
             <div class="profile-header">
+                <small>Profile Photo</small>
               <div class="photo-section">
                 <img [src]="photoPreviewPath" alt="" class="logo-img" />
                 <input type="file" (change)="onSelectedPhoto($event)" accept="image/*" />
