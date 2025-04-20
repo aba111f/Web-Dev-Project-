@@ -13,7 +13,6 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, FormsModule,RouterModule]
 })
 export class ProfilePageComponent { 
-
   constructor(private service: AuthService){}
   profile: Profile = {
     id: 0,
