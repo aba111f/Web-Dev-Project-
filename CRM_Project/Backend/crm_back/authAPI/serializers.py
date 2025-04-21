@@ -4,7 +4,10 @@ from authAPI.models import Profile
 class SerializerProfile(serializers.ModelSerializer):
     class Meta:
         model=Profile
-        fields='__all__'
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+        exclude = ['is_active', 'is_staff', 'groups', 'user_permissions']
     
     def validate_username(self, value):
         if Profile.objects.filter(username=value).exists():
@@ -20,3 +23,11 @@ class SerializerProfile(serializers.ModelSerializer):
         if Profile.objects.filter(phone_num=value).exists():
             raise serializers.ValidationError("Пользователь с таким телефоном уже существует.")
         return value
+    
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        user = Profile.objects.create_user(
+            password=password,
+            **validated_data
+        )
+        return user

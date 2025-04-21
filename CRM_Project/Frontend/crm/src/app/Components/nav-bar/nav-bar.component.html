@@ -14,11 +14,11 @@
             <span>John Doe</span>
             <a [routerLink]="'/profile'">Profile</a>
             <a>Settings</a>
-            <a>Logout</a>
+            <a (click)="logout()">Logout</a>
         </div>
     </div>
 
-    <div class="log-reg">
+    <div class="log-reg" *ngIf="!isLogged">
         <button class="btn-login" [routerLink]="'/login'">Login</button>
         <button class="btn-registration" [routerLink]="'/registration'">Try for free</button>
     </div>

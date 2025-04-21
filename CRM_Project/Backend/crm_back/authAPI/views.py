@@ -29,7 +29,7 @@ class getUser(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class=SerializerProfile
     lookup_field="id"
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
 
 class Graphics(generics.GenericAPIView):

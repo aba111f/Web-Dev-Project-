@@ -39,9 +39,16 @@ export class ProfilePageComponent implements OnInit {
   }
 
   loadProfile() {
-    alert("MUAUAUUAU");
     if (this.profileId) {
       this.authService.getProfile(this.profileId).subscribe((data: any) => {
+        this.form.patchValue(data);
+        this.photoPreview = data.PhotoFile ? URL.createObjectURL(data.PhotoFile) : null;
+        this.logoPreview = data.logoFile ? URL.createObjectURL(data.logoFile) : null;
+      });
+    }
+    else{
+      const id = localStorage.getItem('user_id');
+      this.authService.getProfile(Number(id)).subscribe((data: any) => {
         this.form.patchValue(data);
         this.photoPreview = data.PhotoFile ? URL.createObjectURL(data.PhotoFile) : null;
         this.logoPreview = data.logoFile ? URL.createObjectURL(data.logoFile) : null;

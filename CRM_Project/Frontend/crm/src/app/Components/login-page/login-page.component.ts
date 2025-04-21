@@ -7,6 +7,7 @@ import { Token } from '../../interfaces/auth-model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-login-page',
   imports: [FormsModule],
@@ -22,9 +23,8 @@ export class LoginPageComponent {
     
   }
   loginData(){
-    alert("TEST!");
     this.service.logindata(this.authModel).subscribe(token => {
-     
+      this.service.logged();
       this.service.setID(token.user_id);
       this.router.navigate(['/profile']);
 
@@ -35,5 +35,6 @@ export class LoginPageComponent {
     this.authModel.password = '';
 
   } 
+
  
 }
