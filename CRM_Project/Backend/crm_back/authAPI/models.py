@@ -54,6 +54,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 class TotalProfit(models.Model):
     date = models.DateField()
     profit = models.FloatField()
+    user_id=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='total_profit')
 
     def __str__(self):
         return str(self.profit)
@@ -61,6 +62,7 @@ class TotalProfit(models.Model):
 class ActiveClient(models.Model):
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    user_id=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='active_client')
 
     def __str__(self):
         return self.name
@@ -75,6 +77,7 @@ class ActiveClient(models.Model):
 class ActiveProject(models.Model):
     title = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    user_id=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='active_project')
 
     def __str__(self):
         return self.title
