@@ -82,10 +82,16 @@ class ActiveProject(models.Model):
     def __str__(self):
         return self.title
 
+class Employee(models.Model): #Cheliki
+    FirstName = models.CharField(max_length=100)
+    LastName = models.CharField(max_length=100)
+    mail = models.EmailField(max_length=255, unique=True)
+    salary = models.FloatField()
+    specialization = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
 
-
-
-
+    def __str__(self):
+        return f"{self.FirstName} {self.LastName}"
 
 
 

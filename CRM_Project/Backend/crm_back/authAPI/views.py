@@ -19,12 +19,12 @@ from django.contrib.auth import authenticate
 
 # Create your views here.
 # @api_view(['POST'])
-class DataProfile(generics.CreateAPIView):
+class ListProfile(generics.CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = SerializerProfile
     # permission_classes = (IsAuthenticated,)
 
-class getUser(generics.RetrieveUpdateDestroyAPIView):
+class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class=SerializerProfile
     lookup_field="id"
