@@ -15,8 +15,7 @@ from .models import Profile
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-
-
+from django.contrib.auth import authenticate
 
 # Create your views here.
 # @api_view(['POST'])
@@ -78,7 +77,7 @@ class CustomLoginView(APIView):
 
         try:
             user = Profile.objects.get(username=username)
-            if user.password == password:
+            if authenticate(username=username, password=password)is not None:
                 refresh = RefreshToken.for_user(user)
                 return Response({
                     'refresh': str(refresh),
