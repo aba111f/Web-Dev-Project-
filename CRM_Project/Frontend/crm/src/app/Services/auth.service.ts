@@ -97,4 +97,8 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem('access_token') || '';
   }
+
+  updateData(id:number, data: Profile){
+    return this.http.put(this.APIUrl+'api/profiles/'+id+'/', data);
+  }
 }
