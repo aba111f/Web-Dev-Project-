@@ -7,13 +7,15 @@ import { Profit } from '../interfaces/profit';
   providedIn: 'root'
 })
 export class ProfitService {
-  readonly baseUrl = "http://127.0.0.1:8000/api/Graphics/TotalProfit/";
+  private userId = localStorage.getItem('user_id');
+
+  readonly baseUrl = `http://127.0.0.1:8000/api/Graphics/TotalProfit/${this.userId}`;
 
   constructor(private http: HttpClient) {}
 
   getTotalProfit(): Observable<Profit[]> {
-    const userId = localStorage.getItem('user_id');
-    if (!userId) {
+    
+    if (!this.userId) {
       throw new Error('User ID not found in localStorage.');
     }
     return this.http.get<Profit[]>(`${this.baseUrl}/`);
