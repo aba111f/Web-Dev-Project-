@@ -66,8 +66,8 @@ export class ProfilePageComponent implements OnInit {
         username: data.username,
         password: data.password,
         mail: data.mail,
-        PhotoFile: data.PhotoFileName,
-        logoFile: data.logoName,
+        PhotoFileName: data.PhotoFileName,
+        logoName: data.logoName,
         BussinesName: data.BussinesName,
         phone_num: data.phone_num,
         age: data.age
