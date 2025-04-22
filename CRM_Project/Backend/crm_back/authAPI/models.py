@@ -33,7 +33,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     LastName = models.CharField(max_length=100)
     mail = models.EmailField(max_length=255, unique=True)
     phone_num = models.CharField(max_length=100, unique=True)
-    age = models.IntegerField()
+    age = models.IntegerField(null=True)
     PhotoFileName = models.ImageField(upload_to='images/photo/')
     BussinesName = models.CharField(max_length=100)
     logoName = models.ImageField(upload_to='images/logo/')
