@@ -5,6 +5,7 @@ import { RegistrationPageComponent } from './Components/registration-page/regist
 import { ProfilePageComponent } from './Components/profile-page/profile-page.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { ProfitGraphComponent } from './Components/profit-graph/profit-graph.component';
+import { ActiveClientsComponent } from './Components/active-clients/active-clients.component';
 
 export const routes: Routes = [
     {
@@ -30,5 +31,9 @@ export const routes: Routes = [
     {
         path:'profit',
         component: ProfitGraphComponent
+    },
+    {
+        path:'activeClients',
+        component: ActiveClientsComponent
     }
 ];
