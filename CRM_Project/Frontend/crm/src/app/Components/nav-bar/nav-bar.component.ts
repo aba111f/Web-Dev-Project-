@@ -32,7 +32,7 @@ export class NavBarComponent implements OnInit{
       this.sharedService.profile$.subscribe(res => {
         if(res){
           this.profile = res;
-          console.log(res.PhotoFile);
+          console.log(res.FirstName);
         } 
       }
       );
