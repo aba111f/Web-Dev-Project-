@@ -8,8 +8,8 @@ urlpatterns = [
     path('profiles/<int:id>/', getUser.as_view()),
     path('profiles/', DataProfile.as_view()),
     path('Graphics/ActiveClients/<int:id>/',getGraphicsActiveClients.as_view()),
-    path('Graphics/ActiveProjects/',getGraphicsActiveProjects.as_view()),
-    path('Graphics/TotalProfit/',getGraphicsTotalProfit.as_view(), name='login'),
+    path('Graphics/ActiveProjects/<int:id>/',getGraphicsActiveProjects.as_view()),
+    path('Graphics/TotalProfit/<int:id>/',getGraphicsTotalProfit.as_view(), name='login'),
     path('login/', CustomLoginView.as_view()),
     # path('files/upload/', SaveFile),
 ] 
