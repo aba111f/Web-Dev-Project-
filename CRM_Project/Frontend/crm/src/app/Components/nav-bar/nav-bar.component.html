@@ -11,7 +11,7 @@
         <img src="user-avatar.jpg" alt="User" [routerLink]="'/profile'">
         
         <div class="dropdown-menu">
-            <span>John Doe</span>
+            <span>{{profile.FirstName}} {{profile.LastName}}</span>
             <a [routerLink]="'/profile'">Profile</a>
             <a>Settings</a>
             <a (click)="logout()">Logout</a>

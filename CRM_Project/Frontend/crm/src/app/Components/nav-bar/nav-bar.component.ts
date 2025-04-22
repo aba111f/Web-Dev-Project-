@@ -3,6 +3,8 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { SharedService } from '../../Services/shared.service';
+import { Profile } from '../../interfaces/profile';
 
 
 @Component({
@@ -13,7 +15,8 @@ import { Subscription } from 'rxjs';
 })
 export class NavBarComponent implements OnInit{
   private sub!: Subscription;
-  constructor(private router: Router, private service: AuthService){
+  profile!: Profile;
+  constructor(private router: Router, private service: AuthService, private sharedService: SharedService){
     
   }
   isLogged = false;
@@ -26,6 +29,14 @@ export class NavBarComponent implements OnInit{
       this.service.isAuthenticated$.subscribe(isAuth => {
         this.isLogged = isAuth;
       });
+      this.sharedService.profile$.subscribe(res => {
+        if(res){
+          this.profile = res;
+          console.log(res.PhotoFile);
+        } 
+      }
+      );
+      
   }
   
 }

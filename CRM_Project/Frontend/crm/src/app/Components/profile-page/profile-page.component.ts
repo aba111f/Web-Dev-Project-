@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginPageComponent } from '../login-page/login-page.component';
+import { SharedService } from '../../Services/shared.service';
+import { Profile } from '../../interfaces/profile';
 
 @Component({
   selector: 'app-profile-page',
@@ -16,6 +18,8 @@ export class ProfilePageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private http = inject(HttpClient);
+  profile!: Profile;
+  constructor(private sharedService: SharedService){}
 
   form!: FormGroup;
   profileId: number=this.authService.getID();
@@ -50,6 +54,7 @@ export class ProfilePageComponent implements OnInit {
     else{
       const id = localStorage.getItem('user_id');
       this.authService.getProfile(Number(id)).subscribe((data: any) => {
+        
         this.form.patchValue(data);
         this.photoPreview = data.PhotoFileName ? `http://localhost:8000/${data.PhotoFileName}` : null;
         this.logoPreview = data.logoName ? `http://localhost:8000/${data.logoName}` : null;
