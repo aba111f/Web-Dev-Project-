@@ -12,7 +12,7 @@ class ProfileManager(BaseUserManager):
         permissions = extra_fields.pop('user_permissions', [])
         extra_fields.setdefault('is_active', True)
         user = self.model(username=username, **extra_fields)
-        user.password = password 
+        user.set_password(password)
         user.save()
 
         if groups:
