@@ -7,7 +7,7 @@ export interface Profile {
     mail: string;
     phone_num: string;
     age: number;
-    PhotoFile: File | null; 
+    PhotoFileName: File | null; 
     BussinesName: string;
-    logoFile: File | null;
+    logoName: File | null;
 }

@@ -30,9 +30,9 @@ export class RegistrationPageComponent {
       mail: "",
       phone_num: "",
       age: 0,
-      PhotoFile: null,
+      PhotoFileName: null,
       BussinesName: "",
-      logoFile: null
+      logoName: null
     }
     PhotoFilePath: string = "";
     logoPreviewPath: string = "";
@@ -41,16 +41,16 @@ export class RegistrationPageComponent {
     onSelectedLogo(event: any){
       const file: File = event.target.files[0];
       if(file){
-        this.profile.logoFile = file;
-        console.log(this.profile.logoFile);
+        this.profile.logoName = file;
+        
         this.logoPreviewPath = URL.createObjectURL(file);
       }
     }
     onSelectedPhoto(event: any){
       const file: File = event.target.files[0];
       if(file){
-        this.profile.PhotoFile = file;
-        console.log(this.profile.logoFile);
+        this.profile.PhotoFileName = file;
+        
         this.photoPreviewPath = URL.createObjectURL(file);
       }
     }
@@ -76,11 +76,11 @@ export class RegistrationPageComponent {
       formData.append('phone_num', this.profile.phone_num);
       formData.append('age', this.profile.age.toString());
       formData.append('BussinesName', this.profile.BussinesName);
-      if(this.profile.PhotoFile){
-      formData.append('PhotoFileName', this.profile.PhotoFile, this.profile.PhotoFile.name);
+      if(this.profile.PhotoFileName){
+      formData.append('PhotoFileName', this.profile.PhotoFileName, this.profile.PhotoFileName.name);
       }
-      if(this.profile.logoFile){
-        formData.append('logoName', this.profile.logoFile, this.profile.logoFile.name);
+      if(this.profile.logoName){
+        formData.append('logoName', this.profile.logoName, this.profile.logoName.name);
       }
   
       this.service.uploadProfileData(formData).subscribe({

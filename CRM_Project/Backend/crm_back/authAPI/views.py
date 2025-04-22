@@ -33,12 +33,23 @@ class getUser(generics.RetrieveUpdateDestroyAPIView):
 
 class Graphics(generics.GenericAPIView):
     model = None
-    # permission_classes = (IsAuthenticated,)
-    def get(self, request):
+
+    def get(self, request, *args, **kwargs):
         if self.model is None:
             return Response({"error": "Model is not defined."}, status=500)
-        
-        queryset = self.model.objects.all()
+
+        user_id = kwargs.get('id') or request.query_params.get('id')
+        if not user_id:
+            return Response(
+                {"error": "User id not provided. Pass it as /.../<id>/ or ?id=<id>."},
+                status=400
+            )
+
+        try:
+            queryset = self.model.objects.filter(user_id=int(user_id))
+        except ValueError:
+            return Response({"error": "Invalid user id."}, status=400)
+
         data = [model_to_dict(obj) for obj in queryset]
         return Response(data)
 

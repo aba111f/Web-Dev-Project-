@@ -52,12 +52,13 @@ export class ProfilePageComponent implements OnInit {
   
     if (!id) return;
   
-    this.authService.getProfile(id).subscribe((data: Profile) => {
+    this.authService.getProfile(id).subscribe((data: any) => {
       this.form.patchValue(data);
   
-      this.photoPreview = data.PhotoFile ? `http://localhost:8000/${data.PhotoFile}` : null;
-      this.logoPreview = data.logoFile ? `http://localhost:8000/${data.logoFile}` : null;
-  
+      this.photoPreview = data.PhotoFileName || null;
+      this.logoPreview = data.logoName || null;
+
+      console.log(this.photoPreview);
       const profile: Profile = {
         id: data.id,
         FirstName: data.FirstName,
@@ -65,8 +66,8 @@ export class ProfilePageComponent implements OnInit {
         username: data.username,
         password: data.password,
         mail: data.mail,
-        PhotoFile: data.PhotoFile,
-        logoFile: data.logoFile,
+        PhotoFileName: data.PhotoFileName,
+        logoName: data.logoName,
         BussinesName: data.BussinesName,
         phone_num: data.phone_num,
         age: data.age
