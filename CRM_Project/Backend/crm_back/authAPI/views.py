@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from django.core.files.storage import default_storage
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .serializers import *
 from .models import *
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ from django.contrib.auth import authenticate
 class ListProfile(generics.CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = SerializerProfile
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
 class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
@@ -33,6 +33,7 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
 
 class Graphics(generics.GenericAPIView):
     model = None
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         if self.model is None:
@@ -146,3 +147,23 @@ class CustomLoginView(APIView):
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         
 
+class EmployeeList(generics.ListCreateAPIView):
+    serializer_class = SerializerEmployee
+    # permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Employee.objects.filter(user_id=user_id)
+
+    def perform_create(self, serializer):
+        user_id = self.kwargs['user_id']
+        serializer.save(user_id_id=user_id)
+
+
+class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SerializerEmployee
+    # permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return Employee.objects.filter(user_id=user_id)

@@ -89,6 +89,7 @@ class Employee(models.Model): #Cheliki
     salary = models.FloatField()
     specialization = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    user_id=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='employee')
 
     def __str__(self):
         return f"{self.FirstName} {self.LastName}"

@@ -14,7 +14,8 @@ urlpatterns = [
     path('Graphics/TotalProfit/<int:id>/',getGraphicsTotalProfit.as_view(), name='login'),
     path('Graphics/TotalProfit/<int:id>/<int:obj_id>/',getGraphicsTotalProfit.as_view(), name='login'),
     path('login/', CustomLoginView.as_view()),
-    
+    path('profiles/<int:user_id>/employee/', EmployeeList.as_view()),
+    path('profiles/<int:user_id>/employee/<int:pk>', EmployeeActions.as_view()),
     # path('files/upload/', SaveFile),
 ] 
 
