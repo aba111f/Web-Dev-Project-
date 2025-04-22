@@ -15,7 +15,7 @@ import { Profile } from '../../interfaces/profile';
 })
 export class NavBarComponent implements OnInit{
   private sub!: Subscription;
-  profile!: Profile;
+  profile: Profile | null = null;
   constructor(private router: Router, private service: AuthService, private sharedService: SharedService){
     
   }

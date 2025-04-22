@@ -8,10 +8,10 @@
     </div>
 
     <div class="user-profile">
-        <img src="user-avatar.jpg" alt="User" [routerLink]="'/profile'">
+        <img [src]="profile?.PhotoFile" alt="User" [routerLink]="'/profile'">
         
         <div class="dropdown-menu">
-            <span>{{profile.FirstName}} {{profile.LastName}}</span>
+            <span>{{profile?.FirstName}} {{profile?.LastName}}</span>
             <a [routerLink]="'/profile'">Profile</a>
             <a>Settings</a>
             <a (click)="logout()">Logout</a>
