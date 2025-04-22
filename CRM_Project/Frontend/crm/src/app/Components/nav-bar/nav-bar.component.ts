@@ -33,6 +33,7 @@ export class NavBarComponent implements OnInit{
         if(res){
           this.profile = res;
         } 
+        
       }
       );
       

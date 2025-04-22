@@ -44,38 +44,38 @@ export class ProfilePageComponent implements OnInit {
   }
 
   loadProfile() {
-    if (this.profileId) {
-      this.authService.getProfile(this.profileId).subscribe((data: any) => {
-        this.form.patchValue(data);
-        this.photoPreview = data.PhotoFileName ? `http://localhost:8000/${data.PhotoFileName}` : null;
-        this.logoPreview = data.logoName ? `http://localhost:8000/${data.logoName}` : null;
-      });
+    let id = this.profileId;
+    if (!id) {
+      const stored = localStorage.getItem('user_id');
+      if (stored) id = Number(stored);
     }
-    else{
-      const id = localStorage.getItem('user_id');
-      this.authService.getProfile(Number(id)).subscribe((data: any) => {
-        
-        this.form.patchValue(data);
-        this.photoPreview = data.PhotoFileName ? `http://localhost:8000/${data.PhotoFileName}` : null;
-        this.logoPreview = data.logoName ? `http://localhost:8000/${data.logoName}` : null;
-
-        this.profile = {
-          id: this.form.value.user_id,
-          FirstName: this.form.value.FirstName,
-          LastName: this.form.value.LastName,
-          username: this.form.value.username,
-          password: this.form.value.password,
-          mail: this.form.value.mail,
-          PhotoFile: this.form.value.PhotoFile,
-          logoFile: this.form.value.logoFile,
-          BussinesName: this.form.value.BussinesName,
-          phone_num: this.form.value.phone_num,
-          age: this.form.value.age
-        }
-        this.sharedService.setProfile(this.profile);
-      });
-    }
+  
+    if (!id) return;
+  
+    this.authService.getProfile(id).subscribe((data: Profile) => {
+      this.form.patchValue(data);
+  
+      this.photoPreview = data.PhotoFile ? `http://localhost:8000/${data.PhotoFile}` : null;
+      this.logoPreview = data.logoFile ? `http://localhost:8000/${data.logoFile}` : null;
+  
+      const profile: Profile = {
+        id: data.id,
+        FirstName: data.FirstName,
+        LastName: data.LastName,
+        username: data.username,
+        password: data.password,
+        mail: data.mail,
+        PhotoFile: data.PhotoFile,
+        logoFile: data.logoFile,
+        BussinesName: data.BussinesName,
+        phone_num: data.phone_num,
+        age: data.age
+      };
+  
+      this.sharedService.setProfile(profile);
+    });
   }
+  
 
   onPhotoChange(event: any) {
     const file = event.target.files[0];
