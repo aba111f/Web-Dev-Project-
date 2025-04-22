@@ -10,6 +10,7 @@ import { LoginPageComponent } from '../login-page/login-page.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './profile-page.component.html',
+  styleUrls: ['./profile-page.component.css'],
 })
 export class ProfilePageComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -42,16 +43,16 @@ export class ProfilePageComponent implements OnInit {
     if (this.profileId) {
       this.authService.getProfile(this.profileId).subscribe((data: any) => {
         this.form.patchValue(data);
-        this.photoPreview = data.PhotoFile ? URL.createObjectURL(data.PhotoFile) : null;
-        this.logoPreview = data.logoFile ? URL.createObjectURL(data.logoFile) : null;
+        this.photoPreview = data.PhotoFileName ? `http://localhost:8000/${data.PhotoFileName}` : null;
+        this.logoPreview = data.logoName ? `http://localhost:8000/${data.logoName}` : null;
       });
     }
     else{
       const id = localStorage.getItem('user_id');
       this.authService.getProfile(Number(id)).subscribe((data: any) => {
         this.form.patchValue(data);
-        this.photoPreview = data.PhotoFile ? URL.createObjectURL(data.PhotoFile) : null;
-        this.logoPreview = data.logoFile ? URL.createObjectURL(data.logoFile) : null;
+        this.photoPreview = data.PhotoFileName ? `http://localhost:8000/${data.PhotoFileName}` : null;
+        this.logoPreview = data.logoName ? `http://localhost:8000/${data.logoName}` : null;
       });
     }
   }

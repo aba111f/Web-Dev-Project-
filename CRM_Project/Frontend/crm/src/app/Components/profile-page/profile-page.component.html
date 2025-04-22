@@ -24,11 +24,11 @@
     </div>
     <div class="profile-item">
       <strong>Фото:</strong> 
-      <img *ngIf="form.value.PhotoFile" [src]="photoPreview" alt="Фото профиля" class="profile-photo" />
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Фото профиля" class="profile-photo" />
     </div>
     <div class="profile-item">
       <strong>Логотип:</strong> 
-      <img *ngIf="form.value.logoFile" [src]="logoPreview" alt="Логотип" class="profile-logo" />
+      <img *ngIf="logoPreview" [src]="logoPreview" alt="Логотип" class="profile-logo" />
     </div>
   </div>
 </div>
