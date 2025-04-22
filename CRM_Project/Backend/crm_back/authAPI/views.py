@@ -53,6 +53,51 @@ class Graphics(generics.GenericAPIView):
         data = [model_to_dict(obj) for obj in queryset]
         return Response(data)
 
+    def post(self, request, *args, **kwargs):
+
+        if self.model is None:
+            return Response({"error": "Model is not defined."}, status=500)
+
+        user_id = kwargs.get('id') or request.query_params.get('id')
+        if not user_id:
+            return Response(
+                {"error": "User id not provided. Pass it as /.../<id>/ or ?id=<id>."},
+                status=400
+            )
+
+        payload = request.data.copy()
+        payload['user_id'] = int(user_id)
+
+        try:
+            instance = self.model.objects.create(**payload)
+        except Exception as e:
+            return Response(
+                {"error": f"Could not create: {str(e)}"},
+                status=400
+            )
+
+        return Response(model_to_dict(instance), status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *args, **kwargs):
+
+        if self.model is None:
+            return Response({"error": "Model is not defined."}, status=500)
+
+        user_id = kwargs.get('id') or request.query_params.get('id')
+        obj_id  = kwargs.get('obj_id') or request.query_params.get('obj_id')
+        if not user_id or not obj_id:
+            return Response(
+                {"error": "Both user id and object id must be provided."},
+                status=400
+            )
+
+        try:
+            inst = self.model.objects.get(pk=int(obj_id), user_id=int(user_id))
+        except self.model.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        inst.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class getGraphicsTotalProfit(Graphics):
     model = TotalProfit
