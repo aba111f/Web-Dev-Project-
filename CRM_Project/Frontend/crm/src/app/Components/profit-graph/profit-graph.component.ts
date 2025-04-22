@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { FormsModule } from '@angular/forms';
+import { ProfitService } from '../../Services/profit.service';
+import { Profit } from '../../interfaces/profit';
 
 @Component({
   selector: 'app-profit-graph',
@@ -11,6 +13,14 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './profit-graph.component.css'
 })
 export class ProfitGraphComponent {
+  private profits: Profit[] = []; 
+
+  constructor(private service: ProfitService){
+    this.service.getTotalProfit().subscribe(data => {
+      this.profits = data;
+    });
+  }
+
   selectedRange = 'Months';
   ranges = ['Years',"Quarters", 'Months', 'Weeks', 'Days'];
 
