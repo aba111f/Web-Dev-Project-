@@ -16,6 +16,7 @@ import { Profile } from '../../interfaces/profile';
 export class NavBarComponent implements OnInit{
   private sub!: Subscription;
   profile: Profile | null = null;
+  greeting: string = "";
   constructor(private router: Router, private service: AuthService, private sharedService: SharedService){
     
   }
@@ -23,6 +24,8 @@ export class NavBarComponent implements OnInit{
   logout(){
     this.service.logout();
     this.isLogged = this.service.isLoggedIn();
+    this.profile = null;
+    this.greeting = "Hello user!";
   }
   
   ngOnInit(): void {
@@ -32,6 +35,7 @@ export class NavBarComponent implements OnInit{
       this.sharedService.profile$.subscribe(res => {
         if(res){
           this.profile = res;
+          this.greeting = `${this.profile.FirstName} ${this.profile.LastName}`;
         } 
         
       }

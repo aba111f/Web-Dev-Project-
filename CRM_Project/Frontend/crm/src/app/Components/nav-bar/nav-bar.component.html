@@ -13,7 +13,7 @@
         <div class="dropdown-menu">
             <span>{{profile?.FirstName}} {{profile?.LastName}}</span>
             <a [routerLink]="'/profile'">Profile</a>
-            <a>Settings</a>
+            <a [routerLink]="'/settings'">Settings</a>
             <a (click)="logout()">Logout</a>
         </div>
     </div>
