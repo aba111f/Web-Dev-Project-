@@ -58,6 +58,21 @@ export class ProfilePageComponent implements OnInit {
         this.form.patchValue(data);
         this.photoPreview = data.PhotoFileName ? `http://localhost:8000/${data.PhotoFileName}` : null;
         this.logoPreview = data.logoName ? `http://localhost:8000/${data.logoName}` : null;
+
+        this.profile = {
+          id: this.form.value.user_id,
+          FirstName: this.form.value.FirstName,
+          LastName: this.form.value.LastName,
+          username: this.form.value.username,
+          password: this.form.value.password,
+          mail: this.form.value.mail,
+          PhotoFile: this.form.value.PhotoFile,
+          logoFile: this.form.value.logoFile,
+          BussinesName: this.form.value.BussinesName,
+          phone_num: this.form.value.phone_num,
+          age: this.form.value.age
+        }
+        this.sharedService.setProfile(this.profile);
       });
     }
   }
