@@ -7,7 +7,7 @@
         <button class="btn-search">Search</button>
     </div>
 
-    <div class="user-profile">
+    <div class="user-profile" *ngIf="isLogged">
         <img [src]="profile?.PhotoFileName" alt="User" [routerLink]="'/profile'">
         
         <div class="dropdown-menu">
