@@ -6,6 +6,7 @@ import { ProfilePageComponent } from './Components/profile-page/profile-page.com
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { ProfitGraphComponent } from './Components/profit-graph/profit-graph.component';
 import { ActiveClientsComponent } from './Components/active-clients/active-clients.component';
+import { SettingsComponent } from './Components/settings/settings.component';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path:'activeClients',
         component: ActiveClientsComponent
+    },
+    {
+        path:'settings',
+        component: SettingsComponent
     }
 ];
