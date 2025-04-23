@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee, EmployeeCreate } from '../../interfaces/employee';
 import { EmployeeService } from '../../Services/employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-employee-page',
@@ -12,10 +13,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './employee-page.component.html',
   styleUrls: ['./employee-page.component.css']
 })
-export class EmployeePageComponent implements OnInit {
+export class EmployeePageComponent implements OnInit, OnDestroy {
+  
   private fb = inject(FormBuilder);
   private svc = inject(EmployeeService);
-
+  private destroy$ = new Subject<void>();
   employees: Employee[] = [];
   form!: FormGroup;
   editMode = false;
@@ -25,6 +27,10 @@ export class EmployeePageComponent implements OnInit {
     
     this.initForm();
     this.load();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm() {
@@ -39,7 +45,8 @@ export class EmployeePageComponent implements OnInit {
   }
 
   load() {
-    this.svc.getAll().subscribe(list => {
+    this.svc.getAll().pipe(takeUntil(this.destroy$))
+    .subscribe(list => {
       console.log(list);
       this.employees = list
     });

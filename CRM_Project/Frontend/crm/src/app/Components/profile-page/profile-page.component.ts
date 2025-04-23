@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginPageComponent } from '../login-page/login-page.component';
 import { SharedService } from '../../Services/shared.service';
 import { Profile } from '../../interfaces/profile';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile-page',
@@ -25,6 +26,7 @@ export class ProfilePageComponent implements OnInit {
   profileId: number=localStorage.getItem('user_id') ? Number(localStorage.getItem('user_id')) : 0;
   photoPreview: string | ArrayBuffer | null = null;
   logoPreview: string | ArrayBuffer | null = null;
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -42,6 +44,10 @@ export class ProfilePageComponent implements OnInit {
 
     this.loadProfile();
   }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   loadProfile() {
     let id = this.profileId;
@@ -52,7 +58,8 @@ export class ProfilePageComponent implements OnInit {
   
     if (!id) return;
   
-    this.authService.getProfile(id).subscribe((data: any) => {
+    this.authService.getProfile(id).pipe(takeUntil(this.destroy$))
+    .subscribe((data: any) => {
       this.form.patchValue(data);
   
       this.photoPreview = data.PhotoFileName || null;

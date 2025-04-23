@@ -36,7 +36,8 @@ export class SettingsComponent implements OnInit, OnDestroy{
 
   id = localStorage.getItem('user_id');
   ngOnInit(): void {
-      this.authService.getProfile(Number(this.id)).subscribe({
+      this.authService.getProfile(Number(this.id)).pipe(takeUntil(this.destroy$))
+      .subscribe({
         next: (res) => {
           this.profile = res;
           this.changedProfile = { ...res };
@@ -91,7 +92,8 @@ export class SettingsComponent implements OnInit, OnDestroy{
     }
     
     
-    this.authService.updateData(this.profile.id, formData).subscribe({
+    this.authService.updateData(this.profile.id, formData).pipe(takeUntil(this.destroy$))
+    .subscribe({
         next: (res) => {
           alert("successfullly updated!!!" + res);
         },

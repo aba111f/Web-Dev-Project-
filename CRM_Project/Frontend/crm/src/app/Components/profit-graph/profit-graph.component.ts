@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfitService } from '../../Services/profit.service';
 import { Profit } from '../../interfaces/profit';
 import { NewProfitComponent } from '../new-profit/new-profit.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profit-graph',
@@ -13,14 +14,20 @@ import { NewProfitComponent } from '../new-profit/new-profit.component';
   templateUrl: './profit-graph.component.html',
   styleUrl: './profit-graph.component.css'
 })
-export class ProfitGraphComponent {
+export class ProfitGraphComponent implements OnDestroy {
   private profits: Profit[] = []; 
-
+  private destroy$ = new Subject<void>();
+  
   constructor(private service: ProfitService){
-    this.service.getTotalProfit().subscribe(data => {
+    this.service.getTotalProfit().pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
       this.profits = data;
       this.chartData = this.getChartData(this.selectedRange); 
     });
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   selectedRange = 'Months';

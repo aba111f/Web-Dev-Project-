@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Profile } from '../../interfaces/profile';
@@ -6,6 +6,7 @@ import { AuthService } from '../../Services/auth.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Errors } from '../../interfaces/registerErrors';
 import { PassValidatorDirective } from '../../Validators/pass-validator.directive';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-registration-page',
@@ -13,14 +14,20 @@ import { PassValidatorDirective } from '../../Validators/pass-validator.directiv
   templateUrl: './registration-page.component.html',
   styleUrl: './registration-page.component.css'
 })
-export class RegistrationPageComponent {
+export class RegistrationPageComponent implements OnDestroy{
   errMessage: string = "";
   err: Errors = {
     e_mail: "",
     e_phone: "",
     e_username: "" 
   };  
+  private destroy$ = new Subject<void>();
   constructor(private service: AuthService, private router: Router){}
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
     profile: Profile = {
       id: 0,
       username: "",
@@ -83,7 +90,8 @@ export class RegistrationPageComponent {
         formData.append('logoName', this.profile.logoName, this.profile.logoName.name);
       }
   
-      this.service.uploadProfileData(formData).subscribe({
+      this.service.uploadProfileData(formData).pipe(takeUntil(this.destroy$))
+      .subscribe({
         next: (res) => {
           this.router.navigate(['/login']);
           alert("Profile created successfully!");
