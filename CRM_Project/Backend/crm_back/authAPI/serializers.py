@@ -37,3 +37,18 @@ class SerializerEmployee(serializers.ModelSerializer):
         model = Employee
         fields = '__all__'
         read_only_fields = ('user_id',)
+
+class TotalProfitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TotalProfit
+        fields = '__all__'
+
+class ActiveClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActiveClient
+        fields = '__all__'
+
+class ActiveProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActiveProject
+        fields = '__all__'

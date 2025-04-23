@@ -22,7 +22,6 @@ from django.contrib.auth import authenticate
 class ListProfile(generics.CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = SerializerProfile
-    permission_classes = (IsAuthenticated,)
 
 class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
@@ -30,6 +29,7 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="id"
     permission_classes = (IsAuthenticated,)
 
+<<<<<<< HEAD
 class Graphics(generics.GenericAPIView):
     model = None
     # permission_classes = (IsAuthenticated,)
@@ -123,6 +123,8 @@ class getGraphicsActiveProjects(Graphics):
 #     file = request.FILES['uploadedFile']
 #     file_name = default_storage.save(file.name, file)
 #     return Response({"filename": file_name})
+=======
+>>>>>>> 7aa2ec17100c9619107d6c8b75346d91cfd67f3a
 
 
 class CustomLoginView(APIView):
@@ -148,7 +150,7 @@ class CustomLoginView(APIView):
 
 class EmployeeList(generics.ListCreateAPIView):
     serializer_class = SerializerEmployee
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
@@ -161,8 +163,62 @@ class EmployeeList(generics.ListCreateAPIView):
 
 class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SerializerEmployee
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         return Employee.objects.filter(user_id=user_id)
+    
+
+
+
+# TotalProfit
+class TotalProfitListCreate(generics.ListCreateAPIView):
+    serializer_class = TotalProfitSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return TotalProfit.objects.filter(user_id_id=user_id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id_id=self.kwargs['user_id'])
+
+class TotalProfitDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = TotalProfit.objects.all()
+    serializer_class = TotalProfitSerializer
+
+# ActiveClient
+class ActiveClientListCreate(generics.ListCreateAPIView):
+    serializer_class = ActiveClientSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return ActiveClient.objects.filter(user_id_id=user_id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id_id=self.kwargs['user_id'])
+
+class ActiveClientDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ActiveClient.objects.all()
+    serializer_class = ActiveClientSerializer
+    permission_classes = (IsAuthenticated,)
+
+# ActiveProject
+class ActiveProjectListCreate(generics.ListCreateAPIView):
+    serializer_class = ActiveProjectSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return ActiveProject.objects.filter(user_id_id=user_id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id_id=self.kwargs['user_id'])
+
+class ActiveProjectDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ActiveProject.objects.all()
+    serializer_class = ActiveProjectSerializer
+    permission_classes = (IsAuthenticated,)
