@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SharedService } from '../../Services/shared.service';
 import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../Services/auth.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-settings',
@@ -43,10 +44,9 @@ export class SettingsComponent implements OnInit{
         this.changedProfile = { ...this.profile };
 
         // this.logoPreviewPath = this.profile?.logoName;
-        
+        console.log(this.profile);
       });
       
-    console.log(this.changedProfile);
   };
 
   onSelectedLogo(event: any){
@@ -65,22 +65,22 @@ export class SettingsComponent implements OnInit{
 
   
   change(){
-    let updatedProfile: Partial<Profile> = {};
-
-    for(let key in this.changedProfile){
-      const initialValue = this.profile[key as keyof Profile];
-      const changedValue = this.changedProfile[key as keyof Profile];
-      // if(changedValue !== initialValue){
-      //   updatedProfile[key as keyof Profile] = changedValue as (string | number | File | null);
-
-      // }
-
-    }
-    console.log(this.profile);
-
-    this.authService.updateData(this.profile.id, this.profile).subscribe(
+    const formData = new FormData();
+    formData.append('FirstName', this.changedProfile.FirstName);
+    formData.append('LastName', this.changedProfile.LastName);
+    formData.append('username', this.changedProfile.username);
+    formData.append('phone_num', this.changedProfile.phone_num);
+    formData.append('mail', this.changedProfile.mail);
+    formData.append('PhotoFileName', this.changedProfile.PhotoFileName as File);
+    formData.append('logoName', this.changedProfile.logoName as File);
+    formData.append('age', this.changedProfile.age.toString());
+    formData.append('BussinesName', this.changedProfile.BussinesName);
+    
+    
+    this.authService.updateData(this.profile.id, formData).subscribe(
       res => {
-        alert(res.toString());
+        alert(res + "Successfully updated");
+        
       },
       err => {
         alert("some error while updating"+ err);
