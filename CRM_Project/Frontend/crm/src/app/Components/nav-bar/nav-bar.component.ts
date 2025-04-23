@@ -27,19 +27,20 @@ export class NavBarComponent implements OnInit{
     this.profile = null;
     this.greeting = "Hello user!";
   }
-  
+  id = localStorage.getItem('user_id');
   ngOnInit(): void {
       this.service.isAuthenticated$.subscribe(isAuth => {
         this.isLogged = isAuth;
       });
-      this.sharedService.profile$.subscribe(res => {
-        if(res){
+      this.service.getProfile(Number(this.id)).subscribe({
+        next: (res) => {
           this.profile = res;
-          this.greeting = `${this.profile.FirstName} ${this.profile.LastName}`;
-        } 
-        
-      }
-      );
+          this.greeting = this.profile?.FirstName + ' ' + this.profile?.LastName;
+        },
+        error: (err) => {
+          alert("error " + err);
+        }
+      });
       
   }
   

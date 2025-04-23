@@ -27,18 +27,21 @@ export class SettingsComponent implements OnInit{
     logoName: null
   }
 
-
+  changedProfile!: Profile;
   photoPreviewPath: string = "";
   logoPreviewPath: string = "";
 
 
-
+  id = localStorage.getItem('user_id');
   ngOnInit(): void {
-      this.sharedService.profile$.subscribe(profile => {
-        if(profile){
-          this.profile = profile;
+      this.authService.getProfile(Number(this.id)).subscribe({
+        next: (res) => {
+          this.profile = res;
+          this.changedProfile = { ...res };
+        },
+        error: (err) => {
+          alert("error " + err);
         }
-        
       });
       
   };
@@ -46,14 +49,14 @@ export class SettingsComponent implements OnInit{
   onSelectedLogo(event: any){
     const file: File = event.target.files[0];
     if(file){
-      this.profile.logoName = file;
+      this.changedProfile.logoName = file;
       this.logoPreviewPath = URL.createObjectURL(file);
     }
   };
   onSelectedPhoto(event: any){
     const file: File = event.target.files[0];
     if(file){
-      this.profile.PhotoFileName = file;
+      this.changedProfile.PhotoFileName = file;
       this.photoPreviewPath = URL.createObjectURL(file);
     }
   };
@@ -61,21 +64,31 @@ export class SettingsComponent implements OnInit{
   
   change(){
     const formData = new FormData();
-    formData.append('FirstName', this.profile.FirstName);
-    formData.append('LastName', this.profile.LastName);
-    formData.append('username', this.profile.username);
-    formData.append('phone_num', this.profile.phone_num);
-    formData.append('mail', this.profile.mail);
-    formData.append('PhotoFileName', this.profile.PhotoFileName as File);
-    formData.append('logoName', this.profile.logoName as File);
-    formData.append('age', this.profile.age.toString());
-    formData.append('BussinesName', this.profile.BussinesName);
-    
-    formData.forEach(element => {
-      console.log(element);
-    });
-    this.authService.updateData(this.profile.id, formData).subscribe({
+    for(let key in this.profile){
+      const initVal = this.profile[key as keyof Profile];
+      const changedVal = this.changedProfile[key as keyof Profile];
+
+      if(changedVal !== initVal){
+        if (changedVal instanceof File) {
+          console.log("Appending file:", key, changedVal);
+          formData.append(key, changedVal as File);
+          
+        } else {
+          if(changedVal){
+            console.log("Appending file:", key, changedVal);
+            formData.append(key, changedVal.toString());
+            
+          }
+        }
+      }
       
+    }
+    
+    
+    this.authService.updateData(this.profile.id, formData).subscribe({
+        next: (res) => {
+          alert("successfullly updated!!!" + res);
+        },
         error: (err) => {
           alert("some error while updating"+ err);
         }
