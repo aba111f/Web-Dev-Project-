@@ -65,7 +65,7 @@ export class EmployeePageComponent implements OnInit {
     if (err.status === 400) {
       let errorMessage = 'Ошибки валидации:';
       for (const [field, errors] of Object.entries(err.error)) {
-        errorMessage += `\n• ${field}: ${errors.join(', ')}`;
+        // errorMessage += `\n• ${field}: ${errors.join(', ')}`;
       }
       alert(errorMessage);
     } else {
