@@ -24,13 +24,15 @@
     </form>
   
     <ul class="employee-list">
-      <li *ngFor="let emp of employees">
-        <span [class.inactive]="!emp.is_active">
-          {{ emp.first_name }} {{ emp.last_name }} ({{ emp.specialization }})
-        </span>
-        <button (click)="edit(emp)">✎</button>
-        <button (click)="delete(emp)">✖</button>
+      <li *ngFor="let employee of employees">
+        <p [class.inactive]="!employee.is_active">{{ employee.first_name }} {{ employee.last_name }}</p>
+        <p [class.inactive]="!employee.is_active">{{ employee.email }}</p>
+        <p [class.inactive]="!employee.is_active">{{ employee.salary }}</p>
+        <p [class.inactive]="!employee.is_active">{{ employee.specialization }}</p>
+        <button (click)="edit(employee)">✎</button>
+        <button (click)="delete(employee)">✖</button>
       </li>
+      
     </ul>
   </div>
   

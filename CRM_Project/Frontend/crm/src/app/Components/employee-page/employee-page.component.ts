@@ -21,15 +21,16 @@ export class EmployeePageComponent implements OnInit {
   editingId: number | null = null;
 
   ngOnInit() {
+    console.log(this.employees);
     this.initForm();
     this.load();
   }
 
   private initForm() {
     this.form = this.fb.group({
-      FirstName: ['', Validators.required],
-      LastName:  ['', Validators.required],
-      mail:      ['', [Validators.required, Validators.email]],
+      first_name: ['', Validators.required],
+      last_name:  ['', Validators.required],
+      email:      ['', [Validators.required, Validators.email]],
       salary:    [0, Validators.required],
       specialization: ['', Validators.required],
       is_active: [true]
@@ -38,6 +39,7 @@ export class EmployeePageComponent implements OnInit {
 
   load() {
     this.svc.getAll().subscribe(list => this.employees = list);
+    
   }
 
   onSubmit() {
