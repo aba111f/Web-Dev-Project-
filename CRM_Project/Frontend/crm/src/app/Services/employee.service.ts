@@ -19,16 +19,25 @@ export class EmployeeService {
 
   create(data: EmployeeCreate): Observable<Employee> {
     const userId = this.auth.getID();
-    return this.http.post<Employee>(`${this.API}/profiles/${userId}/employees/`, data);
+    return this.http.post<Employee>(
+      `${this.API}/profiles/${userId}/employee/`,
+      data
+    );
   }
 
   update(id: number, data: EmployeeCreate): Observable<Employee> {
     const userId = this.auth.getID();
-    return this.http.put<Employee>(`${this.API}/employees/${userId}/${id}/`, data);
+    return this.http.put<Employee>(
+      `${this.API}/profiles/${userId}/employee/${id}/`,
+      data
+    );
   }
 
   delete(id: number): Observable<void> {
     const userId = this.auth.getID();
-    return this.http.delete<void>(`${this.API}/employees/${userId}/${id}/`);
+    return this.http.delete<void>(
+      `${this.API}/profiles/${userId}/employee/${id}/`
+    );
   }
+  
 }

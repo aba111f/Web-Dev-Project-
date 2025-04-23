@@ -7,7 +7,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { ProfitGraphComponent } from './Components/profit-graph/profit-graph.component';
 import { ActiveClientsComponent } from './Components/active-clients/active-clients.component';
 import { SettingsComponent } from './Components/settings/settings.component';
-import { EmployeeComponent } from './Components/employee/employee.component';
+import { EmployeePageComponent } from './Components/employee/employee-page.component';
 
 export const routes: Routes = [
     {
@@ -40,7 +40,7 @@ export const routes: Routes = [
     },
     {
         path:'employee',
-        component: EmployeeComponent
+        component: EmployeePageComponent
     },
     {
         path:'settings',
