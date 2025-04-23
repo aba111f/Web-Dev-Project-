@@ -52,7 +52,8 @@ class CustomLoginView(APIView):
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         
 
-class EmployeeList(generics.ListCreateAPIView):
+
+class EmployeeListCreate(generics.ListCreateAPIView):
     serializer_class = SerializerEmployee
     permission_classes = (IsAuthenticated,)
 
@@ -65,7 +66,7 @@ class EmployeeList(generics.ListCreateAPIView):
         serializer.save(user_id_id=user_id)
 
 
-class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
+class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SerializerEmployee
     permission_classes = (IsAuthenticated,)
 
