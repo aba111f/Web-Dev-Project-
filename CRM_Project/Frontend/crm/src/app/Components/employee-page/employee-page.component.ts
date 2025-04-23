@@ -21,6 +21,7 @@ export class EmployeePageComponent implements OnInit {
   editingId: number | null = null;
 
   ngOnInit() {
+    console.log(this.employees);
     this.initForm();
     this.load();
   }
@@ -38,7 +39,7 @@ export class EmployeePageComponent implements OnInit {
 
   load() {
     this.svc.getAll().subscribe(list => this.employees = list);
-    console.log(this.employees);
+    
   }
 
   onSubmit() {
