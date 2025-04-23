@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./new-profit.component.css'] 
 })
 export class NewProfitComponent {
-  today: number = Date.now();
-  
+  defaultDate: string;
+
   newProfit: Profit;
   successMessage: string = '';
   errorMessage: string = '';
@@ -24,6 +24,9 @@ export class NewProfitComponent {
       profit: 0,
       user_id: 0 
     };
+
+    const today = new Date();
+    this.defaultDate = today.toISOString().split('T')[0];
   }
 
   onSubmit() {

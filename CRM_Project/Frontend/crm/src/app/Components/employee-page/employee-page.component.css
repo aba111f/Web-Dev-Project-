@@ -1,26 +1,36 @@
-.employee-info {
-  flex: 1;
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 1.2em;
+}
+
+.employee-info h3 {
+  margin: 0;
+  color: #333;
+}
+
+.employee-info h3.inactive {
+  color: #999;
 }
 
 .employee-info span {
-  color: #666;
+  font-weight: normal;
   font-size: 0.9em;
+  color: #666;
 }
 
-.employee-actions {
-  display: flex;
-  gap: 8px;
+.employee-info p {
+  margin: 4px 0;
+  color: #444;
 }
 
-.employee-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-  transition: background 0.2s;
+.employee-actions button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
-.employee-list li:hover {
-  background: #f5f5f5;
+.employee-actions button:hover {
+  background: #f0f0f0;
 }

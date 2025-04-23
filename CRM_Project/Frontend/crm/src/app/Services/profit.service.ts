@@ -9,7 +9,7 @@ import { Profit } from '../interfaces/profit';
 export class ProfitService {
   private userId = localStorage.getItem('user_id');
 
-  readonly baseUrl = "http://127.0.0.1:8000/api/Graphics/TotalProfit/";
+  readonly baseUrl = "http://127.0.0.1:8000/api/profiles/";
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,8 @@ export class ProfitService {
     if (!this.userId) {
       throw new Error('User ID not found in localStorage.');
     }
-    return this.http.get<Profit[]>(`${this.baseUrl}${this.userId}/`);
+    
+    return this.http.get<Profit[]>(`${this.baseUrl}${this.userId}/totalprofit/`);
   }
 
 
@@ -33,7 +34,7 @@ export class ProfitService {
       user_id: Number(this.userId)
     };
     console.log(profitWithUser)
-    return this.http.post<Profit>(`${this.baseUrl}${this.userId}/`, profitWithUser);
+    return this.http.post<Profit>(`${this.baseUrl}${this.userId}/totalprofit/`, profitWithUser);
   }
 
   private formatDateForBackend(date: Date): string {

@@ -1,9 +1,26 @@
-<div style="max-width: 500px; margin: auto;">
-    <h3 style="text-align: center;">Clients Status</h3>
-    <canvas baseChart
-            [data]="pieChartData"
-            [options]="pieChartOptions"
-            [type]="pieChartType">
-    </canvas>
-  </div>
-  
+<div class="client-list-container">
+        <h2 class="title">Client List</h2>
+        <table class="client-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Toggle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of clients">
+              <td class="client-name">{{ client.name }}</td>
+              <td>
+                <span class="status">
+                  <strong [ngClass]="client.is_active ? 'active' : 'inactive'">
+                    {{ client.is_active ? 'Active' : 'Inactive' }}
+                  </strong>
+                </span>
+              </td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" [checked]="client.is_active" (change)="toggleStatus(client)">
+                  <span class="slider"></span>
+                </label>
+      

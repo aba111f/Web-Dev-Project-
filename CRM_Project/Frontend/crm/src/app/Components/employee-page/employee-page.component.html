@@ -1,18 +1,36 @@
-<ul class="employee-list">
-  <li *ngFor="let employee of employees">
-    <div class="employee-info">
-      <p [class.inactive]="!employee.is_active">
-        {{ employee.first_name }} {{ employee.last_name }}
-        <span>({{ employee.specialization }})</span>
-      </p>
-      <p [class.inactive]="!employee.is_active">
-        {{ employee.email }} | Salary: ${{ employee.salary }}
-      </p>
+<div class="employee-page">
+  <h2>Сотрудники</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="employee-form">
+    <div class="row">
+      <input formControlName="FirstName" placeholder="Имя" />
+      <input formControlName="LastName" placeholder="Фамилия" />
     </div>
-    <div class="employee-actions">
+    <div class="row">
+      <input formControlName="mail" placeholder="Почта" type="email" />
+      <input formControlName="specialization" placeholder="Специализация" />
+    </div>
+    <div class="row">
+      <input formControlName="salary" placeholder="Зарплата" type="number" />
+      <label>
+        <input type="checkbox" formControlName="is_active" />
+        Активен
+      </label>
+    </div>
+    <button type="submit" [disabled]="form.invalid">
+      {{ editMode ? 'Сохранить' : 'Добавить' }}
+    </button>
+    <button type="button" (click)="resetForm()" *ngIf="editMode">Отменить</button>
+  </form>
+
+  <ul class="employee-list">
+    <li *ngFor="let employee of employees">
+      <p [class.inactive]="!employee.is_active">{{ employee.FirstName }} {{ employee.LastName }}</p>
+      <p [class.inactive]="!employee.is_active">{{ employee.mail }}</p>
+      <p [class.inactive]="!employee.is_active">{{ employee.salary }}</p>
+      <p [class.inactive]="!employee.is_active">{{ employee.specialization }}</p>
       <button (click)="edit(employee)">✎</button>
       <button (click)="delete(employee)">✖</button>
-    </div>
-  </li>
-  <p *ngIf="employees.length === 0">Нет сотрудников</p>
-</ul>
+    </li>
+  </ul>
+</div>
