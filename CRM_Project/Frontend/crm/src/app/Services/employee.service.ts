@@ -13,12 +13,12 @@ export class EmployeeService {
   private API = 'http://localhost:8000/api/';
 
   getAll(): Observable<Employee[]> {
-    const userId = this.auth.getID();
+    const userId = localStorage.getItem('user_id');
     return this.http.get<Employee[]>(`${this.API}profiles/${userId}/employee/`);
   }
 
   create(data: EmployeeCreate): Observable<Employee> {
-    const userId = this.auth.getID();
+    const userId = localStorage.getItem('user_id');
     return this.http.post<Employee>(
       `${this.API}profiles/${userId}/employee/`,
       data
@@ -26,7 +26,7 @@ export class EmployeeService {
   }
 
   update(id: number, data: EmployeeCreate): Observable<Employee> {
-    const userId = this.auth.getID();
+    const userId = localStorage.getItem('user_id');
     return this.http.put<Employee>(
       `${this.API}profiles/${userId}/employee/${id}/`,
       data
@@ -34,7 +34,7 @@ export class EmployeeService {
   }
 
   delete(id: number): Observable<void> {
-    const userId = this.auth.getID();
+    const userId = localStorage.getItem('user_id');
     return this.http.delete<void>(
       `${this.API}profiles/${userId}/employee/${id}/`
     );
