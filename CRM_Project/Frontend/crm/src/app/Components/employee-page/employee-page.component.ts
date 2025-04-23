@@ -21,9 +21,10 @@ export class EmployeePageComponent implements OnInit {
   editingId: number | null = null;
 
   ngOnInit() {
-    console.log(this.employees);
+    
     this.initForm();
     this.load();
+    console.log(this.employees);
   }
 
   private initForm() {
@@ -38,32 +39,41 @@ export class EmployeePageComponent implements OnInit {
   }
 
   load() {
-    this.svc.getAll().subscribe(list => this.employees = list);
+    this.svc.getAll().subscribe(list => {
+      console.log(list);
+      this.employees = list
+    });
     
   }
 
   onSubmit() {
+    if (this.form.invalid) return;
+  
     const data: EmployeeCreate = this.form.value;
-    if (this.editMode && this.editingId != null) {
-      this.svc.update(this.editingId, data).subscribe(() => {
+    const operation = this.editMode 
+      ? this.svc.update(this.editingId!, data)
+      : this.svc.create(data);
+  
+    operation.subscribe({
+      next: () => {
         this.load();
         this.resetForm();
-      });
-    } else {
-      this.svc.create(data).subscribe(() => {
-        this.load();
-        this.resetForm();
-      });
-    }
+      },
+      error: (err) => {
+        console.error('Ошибка операции:', err);
+        alert('Произошла ошибка! Проверьте консоль для деталей.');
+      }
+    });
   }
+
 
   edit(emp: Employee) {
     this.editMode = true;
     this.editingId = emp.id;
     this.form.patchValue({
-      FirstName: emp.first_name,
-      LastName: emp.last_name,
-      mail: emp.email,
+      first_name: emp.first_name,
+      last_name: emp.last_name,  
+      email: emp.email,           
       salary: emp.salary,
       specialization: emp.specialization,
       is_active: emp.is_active
@@ -78,6 +88,13 @@ export class EmployeePageComponent implements OnInit {
   resetForm() {
     this.editMode = false;
     this.editingId = null;
-    this.form.reset({ FirstName: '', LastName: '', mail: '', salary: 0, specialization: '', is_active: true });
+    this.form.reset({ 
+      first_name: '', 
+      last_name: '', 
+      email: '', 
+      salary: 0, 
+      specialization: '', 
+      is_active: true 
+    });
   }
 }
