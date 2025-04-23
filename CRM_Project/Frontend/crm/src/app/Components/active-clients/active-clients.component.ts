@@ -51,6 +51,7 @@ export class ActiveClientsComponent implements OnInit, OnDestroy{
     this.activeClientsService.updateClientStatus(client.id!, newStatus).subscribe(() => {
       client.is_active = newStatus;
     });
+    this.ngOnInit()
   }
 
   pieChartOptions: ChartConfiguration<'pie'>['options'] = {
