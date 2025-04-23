@@ -22,7 +22,6 @@ from django.contrib.auth import authenticate
 class ListProfile(generics.CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = SerializerProfile
-    permission_classes = (IsAuthenticated,)
 
 class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
@@ -80,6 +79,7 @@ class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
 # TotalProfit
 class TotalProfitListCreate(generics.ListCreateAPIView):
     serializer_class = TotalProfitSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
@@ -89,12 +89,14 @@ class TotalProfitListCreate(generics.ListCreateAPIView):
         serializer.save(user_id_id=self.kwargs['user_id'])
 
 class TotalProfitDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = TotalProfit.objects.all()
     serializer_class = TotalProfitSerializer
 
 # ActiveClient
 class ActiveClientListCreate(generics.ListCreateAPIView):
     serializer_class = ActiveClientSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
@@ -106,10 +108,12 @@ class ActiveClientListCreate(generics.ListCreateAPIView):
 class ActiveClientDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ActiveClient.objects.all()
     serializer_class = ActiveClientSerializer
+    permission_classes = (IsAuthenticated,)
 
 # ActiveProject
 class ActiveProjectListCreate(generics.ListCreateAPIView):
     serializer_class = ActiveProjectSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
@@ -121,3 +125,4 @@ class ActiveProjectListCreate(generics.ListCreateAPIView):
 class ActiveProjectDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ActiveProject.objects.all()
     serializer_class = ActiveProjectSerializer
+    permission_classes = (IsAuthenticated,)
