@@ -1,0 +1,16 @@
+<div class="simple-form">
+    <h3>Add Profit</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <label>Date:</label>
+        <input type="date" [(ngModel)]="newProfit.date" name="date" required>
+      </div>
+      
+      <div>
+        <label>Amount:</label>
+        <input type="number" [(ngModel)]="newProfit.profit" name="profit" min="0" required>
+      </div>
+      
+      <button type="submit">Add</button>
+    </form>
+  </div>
