@@ -19,17 +19,36 @@ export class EmployeeService {
 
   create(data: EmployeeCreate): Observable<Employee> {
     const userId = localStorage.getItem('user_id');
+    const requestData = {
+      FirstName: data.FirstName, // Совпадает с моделью Django
+      LastName: data.LastName,
+      mail: data.mail,
+      salary: data.salary,
+      specialization: data.specialization,
+      is_active: data.is_active,
+      user_id: localStorage.getItem('user_id')
+    };
+  
     return this.http.post<Employee>(
-      `${this.API}profiles/${userId}/employee/`,
-      data
+      `${this.API}profiles/${userId}/employee/`, 
+      requestData
     );
   }
-
+  
   update(id: number, data: EmployeeCreate): Observable<Employee> {
     const userId = localStorage.getItem('user_id');
+    const requestData = {
+      first_name: data.FirstName,
+      last_name: data.LastName,
+      mail: data.mail,
+      salary: data.salary,
+      specialization: data.specialization,
+      is_active: data.is_active
+    };
+  
     return this.http.put<Employee>(
       `${this.API}profiles/${userId}/employee/${id}/`,
-      data
+      requestData
     );
   }
 
