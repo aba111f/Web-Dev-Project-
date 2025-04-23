@@ -1,0 +1,26 @@
+<div class="profit-list-container">
+    <h2>Profit Records</h2>
+    
+    <div *ngIf="profits.length === 0" class="no-records">
+      No profit records found.
+    </div>
+  
+    <table *ngIf="profits.length > 0" class="profit-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Profit</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let profit of profits">
+          <td>{{ profit.date | date:'mediumDate' }}</td>
+          <td>{{ profit.profit | currency }}</td>
+          <td>
+            <button (click)="deleteProfit(profit.id)" class="btn-delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -37,6 +37,14 @@ export class ProfitService {
     return this.http.post<Profit>(`${this.baseUrl}${this.userId}/totalprofit/`, profitWithUser);
   }
 
+  deleteProfit(profitId: number | undefined): Observable<any> {
+    if (!this.userId) {
+      throw new Error('User ID not found in localStorage.');
+    }
+    
+    return this.http.delete(`${this.baseUrl}${this.userId}/totalprofit/${profitId}/`);
+  }
+
   private formatDateForBackend(date: Date): string {
     return date.toISOString().split('T')[0]; 
   }

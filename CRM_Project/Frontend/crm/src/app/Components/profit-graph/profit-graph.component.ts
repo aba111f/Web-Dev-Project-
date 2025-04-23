@@ -7,10 +7,11 @@ import { ProfitService } from '../../Services/profit.service';
 import { Profit } from '../../interfaces/profit';
 import { NewProfitComponent } from '../new-profit/new-profit.component';
 import { Subject, takeUntil } from 'rxjs';
+import { ProfitListComponent } from "../profit-list/profit-list.component";
 
 @Component({
   selector: 'app-profit-graph',
-  imports: [NgChartsModule, CommonModule, FormsModule, NewProfitComponent],
+  imports: [NgChartsModule, CommonModule, FormsModule, NewProfitComponent, ProfitListComponent],
   templateUrl: './profit-graph.component.html',
   styleUrl: './profit-graph.component.css'
 })
