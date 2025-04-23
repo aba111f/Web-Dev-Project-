@@ -16,7 +16,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-
+from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 # @api_view(['POST'])
 class ListProfile(generics.CreateAPIView):
@@ -28,103 +28,7 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=SerializerProfile
     lookup_field="id"
     permission_classes = (IsAuthenticated,)
-
-<<<<<<< HEAD
-class Graphics(generics.GenericAPIView):
-    model = None
-    # permission_classes = (IsAuthenticated,)
-
-    def get(self, request, *args, **kwargs):
-        if self.model is None:
-            return Response({"error": "Model is not defined."}, status=500)
-
-        user_id = kwargs.get('id') or request.query_params.get('id')
-        if not user_id:
-            return Response(
-                {"error": "User id not provided. Pass it as /.../<id>/ or ?id=<id>."},
-                status=400
-            )
-
-        try:
-            queryset = self.model.objects.filter(user_id=int(user_id))
-        except ValueError:
-            return Response({"error": "Invalid user id."}, status=400)
-
-        data = [model_to_dict(obj) for obj in queryset]
-        return Response(data)
-
-    def post(self, request, *args, **kwargs):
-
-        if self.model is None:
-            return Response({"error": "Model is not defined."}, status=500)
-
-        user_id = kwargs.get('id') or request.query_params.get('id')
-        if not user_id:
-            return Response(
-                {"error": "User id not provided. Pass it as /.../<id>/ or ?id=<id>."},
-                status=400
-            )
-
-        payload = request.data.copy()
-        payload['user_id'] = int(user_id)
-
-        try:
-            instance = self.model.objects.create(**payload)
-        except Exception as e:
-            return Response(
-                {"error": f"Could not create: {str(e)}"},
-                status=400
-            )
-
-        return Response(model_to_dict(instance), status=status.HTTP_201_CREATED)
-
-    def delete(self, request, *args, **kwargs):
-
-        if self.model is None:
-            return Response({"error": "Model is not defined."}, status=500)
-
-        user_id = kwargs.get('id') or request.query_params.get('id')
-        obj_id  = kwargs.get('obj_id') or request.query_params.get('obj_id')
-        if not user_id or not obj_id:
-            return Response(
-                {"error": "Both user id and object id must be provided."},
-                status=400
-            )
-
-        try:
-            inst = self.model.objects.get(pk=int(obj_id), user_id=int(user_id))
-        except self.model.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        inst.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class getGraphicsTotalProfit(Graphics):
-    model = TotalProfit
-    # permission_classes = (IsAuthenticated,)
-
-class getGraphicsActiveClients(Graphics):
-    model = ActiveClient
-    # permission_classes = (IsAuthenticated,)
-
-# class getGraphicsQuarterlyRevenue(Graphics):
-#     model = QuarterlyRevenue
-
-class getGraphicsActiveProjects(Graphics):
-    model = ActiveProject
-    # permission_classes = (IsAuthenticated,)
-
-# @api_view(['POST'])
-# @permission_classes(['AllowAny'])
-# def SaveFile(request):
-#     if 'uploadedFile' not in request.FILES:
-#         return Response({"error": "No file uploaded"}, status=400)
-    
-#     file = request.FILES['uploadedFile']
-#     file_name = default_storage.save(file.name, file)
-#     return Response({"filename": file_name})
-=======
->>>>>>> 7aa2ec17100c9619107d6c8b75346d91cfd67f3a
+    parser_classes = (MultiPartParser, FormParser)
 
 
 class CustomLoginView(APIView):

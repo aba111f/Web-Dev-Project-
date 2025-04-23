@@ -91,6 +91,6 @@ export class AuthService {
   }
 
   updateData(id:number, data: FormData){
-    return this.http.put(this.APIUrl+'api/profiles/'+id+'/', data);
+    return this.http.patch(this.APIUrl+'api/profiles/'+id+'/', data);
   }
 }

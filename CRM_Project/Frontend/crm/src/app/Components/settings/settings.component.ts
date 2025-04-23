@@ -27,7 +27,6 @@ export class SettingsComponent implements OnInit{
     logoName: null
   }
 
-  changedProfile!: Profile;
 
   photoPreviewPath: string = "";
   logoPreviewPath: string = "";
@@ -39,10 +38,7 @@ export class SettingsComponent implements OnInit{
         if(profile){
           this.profile = profile;
         }
-        this.changedProfile = { ...this.profile };
-
-        // this.logoPreviewPath = this.profile?.logoName;
-        console.log(this.profile);
+        
       });
       
   };
@@ -50,14 +46,14 @@ export class SettingsComponent implements OnInit{
   onSelectedLogo(event: any){
     const file: File = event.target.files[0];
     if(file){
-      this.changedProfile.logoName = file;
+      this.profile.logoName = file;
       this.logoPreviewPath = URL.createObjectURL(file);
     }
   };
   onSelectedPhoto(event: any){
     const file: File = event.target.files[0];
     if(file){
-      this.changedProfile.PhotoFileName = file;
+      this.profile.PhotoFileName = file;
       this.photoPreviewPath = URL.createObjectURL(file);
     }
   };
@@ -65,24 +61,24 @@ export class SettingsComponent implements OnInit{
   
   change(){
     const formData = new FormData();
-    formData.append('FirstName', this.changedProfile.FirstName);
-    formData.append('LastName', this.changedProfile.LastName);
-    formData.append('username', this.changedProfile.username);
-    formData.append('phone_num', this.changedProfile.phone_num);
-    formData.append('mail', this.changedProfile.mail);
-    formData.append('PhotoFileName', this.changedProfile.PhotoFileName as File);
-    formData.append('logoName', this.changedProfile.logoName as File);
-    formData.append('age', this.changedProfile.age.toString());
-    formData.append('BussinesName', this.changedProfile.BussinesName);
+    formData.append('FirstName', this.profile.FirstName);
+    formData.append('LastName', this.profile.LastName);
+    formData.append('username', this.profile.username);
+    formData.append('phone_num', this.profile.phone_num);
+    formData.append('mail', this.profile.mail);
+    formData.append('PhotoFileName', this.profile.PhotoFileName as File);
+    formData.append('logoName', this.profile.logoName as File);
+    formData.append('age', this.profile.age.toString());
+    formData.append('BussinesName', this.profile.BussinesName);
     
-    
-    this.authService.updateData(this.profile.id, formData).subscribe(
-      res => {
-        alert(res + "Successfully updated");
-        
-      },
-      err => {
-        alert("some error while updating"+ err);
+    formData.forEach(element => {
+      console.log(element);
+    });
+    this.authService.updateData(this.profile.id, formData).subscribe({
+      
+        error: (err) => {
+          alert("some error while updating"+ err);
+        }
       }
     );
   };

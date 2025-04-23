@@ -7,13 +7,13 @@
             
             <div class="avatar-upload">
               <img alt="Profile Photo" [src]="photoPreviewPath ? photoPreviewPath : profile.PhotoFileName" class="avatar-img">
-              <input type="file" id="avatar-upload" accept="image/*" (change)="onSelectedPhoto($event)" [(ngModel)]="changedProfile.PhotoFileName">
+              <input type="file" id="avatar-upload" accept="image/*" (change)="onSelectedPhoto($event)">
               <label for="avatar-upload" class="upload-label">Change Photo</label>
             </div>
             
             <div class="logo-upload">
               <img  alt="Business Logo" [src]="logoPreviewPath ? logoPreviewPath : profile.logoName" class="logo-img">
-              <input type="file" id="logo-upload" accept="image/*" (change)="onSelectedLogo($event)" [(ngModel)]="changedProfile.logoName">
+              <input type="file" id="logo-upload" accept="image/*" (change)="onSelectedLogo($event)">
               <label for="logo-upload" class="upload-label">Change Logo</label>
             </div>
           </div>
@@ -21,31 +21,31 @@
           <div class="form-fields">
             <div class="form-group">
               <label>First Name</label>
-              <input type="text" [defaultValue]="profile.FirstName" [(ngModel)]="changedProfile.FirstName">
+              <input type="text" [defaultValue]="profile.FirstName" [(ngModel)]="profile.FirstName">
             </div>
             <div class="form-group">
               <label>Last Name</label>
-              <input type="text" [defaultValue]="profile.LastName" [(ngModel)]="changedProfile.LastName">
+              <input type="text" [defaultValue]="profile.LastName" [(ngModel)]="profile.LastName">
             </div>
             <div class="form-group">
               <label>Username</label>
-              <input type="text" [defaultValue]="profile.username" [(ngModel)]="changedProfile.username">
+              <input type="text" [defaultValue]="profile.username" [(ngModel)]="profile.username">
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input type="email" [defaultValue]="profile.mail" [(ngModel)]="changedProfile.mail">
+              <input type="email" [defaultValue]="profile.mail" [(ngModel)]="profile.mail">
             </div>
             <div class="form-group">
               <label>Phone Number</label>
-              <input type="tel" [defaultValue]="profile.phone_num" [(ngModel)]="changedProfile.phone_num">
+              <input type="tel" [defaultValue]="profile.phone_num" [(ngModel)]="profile.phone_num">
             </div>
             <div class="form-group">
               <label>Age</label>
-              <input type="number" [defaultValue]="profile.age" [(ngModel)]="changedProfile.age">
+              <input type="number" [defaultValue]="profile.age" [(ngModel)]="profile.age">
             </div>
             <div class="form-group">
               <label>Business Name</label>
-              <input type="text" [defaultValue]="profile.BussinesName" [(ngModel)]="changedProfile.BussinesName">
+              <input type="text" [defaultValue]="profile.BussinesName" [(ngModel)]="profile.BussinesName">
             </div>
           </div>
 
