@@ -1,18 +1,20 @@
 <ul class="employee-list">
   <li *ngFor="let employee of employees">
     <div class="employee-info">
-      <p [class.inactive]="!employee.is_active">
+      <h3 [class.inactive]="!employee.is_active">
         {{ employee.first_name }} {{ employee.last_name }}
         <span>({{ employee.specialization }})</span>
-      </p>
+      </h3>
       <p [class.inactive]="!employee.is_active">
-        {{ employee.email }} | Salary: ${{ employee.salary }}
+        📧 {{ employee.email }} | 💰 ${{ employee.salary }}
       </p>
     </div>
     <div class="employee-actions">
-      <button (click)="edit(employee)">✎</button>
-      <button (click)="delete(employee)">✖</button>
+      <button (click)="edit(employee)" title="Редактировать">✎</button>
+      <button (click)="delete(employee)" title="Удалить">✖</button>
     </div>
   </li>
-  <p *ngIf="employees.length === 0">Нет сотрудников</p>
+  <div *ngIf="employees.length === 0" class="empty-state">
+    🕵️ Нет сотрудников для отображения
+  </div>
 </ul>

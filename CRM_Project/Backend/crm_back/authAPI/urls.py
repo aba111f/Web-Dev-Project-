@@ -13,8 +13,8 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view()),
 
     # Employee
-    path('profiles/<int:user_id>/employees/', EmployeeListCreate.as_view()),
-    path('profiles/<int:user_id>/employees/<int:pk>/', EmployeeDetail.as_view()),
+    path('profiles/<int:user_id>/employee/', EmployeeListCreate.as_view()),
+    path('profiles/<int:user_id>/employee/<int:pk>/', EmployeeDetail.as_view()),
 
     # TotalProfit
     path('profiles/<int:user_id>/totalprofit/', TotalProfitListCreate.as_view()),

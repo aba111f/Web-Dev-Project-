@@ -24,7 +24,6 @@ export class EmployeePageComponent implements OnInit {
     
     this.initForm();
     this.load();
-    console.log(this.employees);
   }
 
   private initForm() {
@@ -47,21 +46,24 @@ export class EmployeePageComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      alert('Заполните все обязательные поля!');
+      return;
+    }
   
-    const data: EmployeeCreate = this.form.value;
     const operation = this.editMode 
-      ? this.svc.update(this.editingId!, data)
-      : this.svc.create(data);
+      ? this.svc.update(this.editingId!, this.form.value)
+      : this.svc.create(this.form.value);
   
     operation.subscribe({
       next: () => {
         this.load();
         this.resetForm();
+        alert(this.editMode ? 'Данные обновлены!' : 'Сотрудник добавлен!');
       },
       error: (err) => {
-        console.error('Ошибка операции:', err);
-        alert('Произошла ошибка! Проверьте консоль для деталей.');
+        console.error('Ошибка:', err);
+        alert(`Ошибка: ${err.error?.message || 'Неизвестная ошибка'}`);
       }
     });
   }
@@ -72,13 +74,14 @@ export class EmployeePageComponent implements OnInit {
     this.editingId = emp.id;
     this.form.patchValue({
       first_name: emp.first_name,
-      last_name: emp.last_name,  
-      email: emp.email,           
+      last_name: emp.last_name,
+      email: emp.email,
       salary: emp.salary,
       specialization: emp.specialization,
       is_active: emp.is_active
     });
   }
+  
 
   delete(emp: Employee) {
     if (!confirm(`Удалить ${emp.first_name} ${emp.last_name}?`)) return;
