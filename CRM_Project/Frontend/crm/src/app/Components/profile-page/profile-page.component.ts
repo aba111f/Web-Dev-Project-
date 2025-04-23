@@ -22,7 +22,7 @@ export class ProfilePageComponent implements OnInit {
   constructor(private sharedService: SharedService){}
 
   form!: FormGroup;
-  profileId: number=this.authService.getID();
+  profileId: number=localStorage.getItem('user_id') ? Number(localStorage.getItem('user_id')) : 0;
   photoPreview: string | ArrayBuffer | null = null;
   logoPreview: string | ArrayBuffer | null = null;
 

@@ -18,15 +18,7 @@ export class AuthService {
   
   private id!:number;
 
-  setID(id: number) {
-    alert(id);
-    this.id = id;
-  }
-
-
-  getID(): number {
-    return this.id;
-  }
+  
   constructor(private http: HttpClient, private router: Router) {
     this.checkInitialAuthState();
   }

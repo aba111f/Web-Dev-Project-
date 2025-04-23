@@ -25,7 +25,7 @@ export class LoginPageComponent {
   loginData(){
     this.service.logindata(this.authModel).subscribe(token => {
       this.service.logged();
-      this.service.setID(token.user_id);
+      localStorage.setItem('user_id', token.user_id.toString());
       this.router.navigate(['/profile']);
 
     }
