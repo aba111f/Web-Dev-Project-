@@ -33,7 +33,7 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
 
 class Graphics(generics.GenericAPIView):
     model = None
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         if self.model is None:
@@ -149,7 +149,7 @@ class CustomLoginView(APIView):
 
 class EmployeeList(generics.ListCreateAPIView):
     serializer_class = SerializerEmployee
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
@@ -162,7 +162,7 @@ class EmployeeList(generics.ListCreateAPIView):
 
 class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SerializerEmployee
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
