@@ -30,7 +30,6 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="id"
     permission_classes = (IsAuthenticated,)
 
-
 class Graphics(generics.GenericAPIView):
     model = None
     # permission_classes = (IsAuthenticated,)

@@ -12,23 +12,21 @@ import { JsonPipe } from '@angular/common';
   styleUrl: './settings.component.css'
 })
 export class SettingsComponent implements OnInit{
-  constructor(private sharedService: SharedService, private authService: AuthService, private fb: FormBuilder){
-    this.profile = {
-      id: 0,
-      FirstName: '',
-      LastName: '',
-      age: 0,
-      username: '',
-      BussinesName: '',
-      PhotoFileName: null,
-      logoName: null,
-      phone_num: '',
-      password: '',
-      mail: ''
-    };
+  constructor(private sharedService: SharedService, private authService: AuthService, private fb: FormBuilder){}
+  profile: Profile = {
+    id: 0,
+    username: "",
+    FirstName: "",
+    LastName: "",
+    password: "",
+    mail: "",
+    phone_num: "",
+    age: 0,
+    PhotoFileName: null,
+    BussinesName: "",
+    logoName: null
   }
 
-  profile : Profile;
   changedProfile!: Profile;
 
   photoPreviewPath: string = "";
@@ -52,13 +50,14 @@ export class SettingsComponent implements OnInit{
   onSelectedLogo(event: any){
     const file: File = event.target.files[0];
     if(file){
-      
+      this.changedProfile.logoName = file;
       this.logoPreviewPath = URL.createObjectURL(file);
     }
   };
   onSelectedPhoto(event: any){
     const file: File = event.target.files[0];
     if(file){
+      this.changedProfile.PhotoFileName = file;
       this.photoPreviewPath = URL.createObjectURL(file);
     }
   };
