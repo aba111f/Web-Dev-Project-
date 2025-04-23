@@ -16,7 +16,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-
+from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 # @api_view(['POST'])
 class ListProfile(generics.CreateAPIView):
@@ -28,7 +28,7 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=SerializerProfile
     lookup_field="id"
     permission_classes = (IsAuthenticated,)
-
+    parser_classes = (MultiPartParser, FormParser)
 
 
 class CustomLoginView(APIView):
@@ -52,7 +52,8 @@ class CustomLoginView(APIView):
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         
 
-class EmployeeList(generics.ListCreateAPIView):
+
+class EmployeeListCreate(generics.ListCreateAPIView):
     serializer_class = SerializerEmployee
     permission_classes = (IsAuthenticated,)
 
@@ -65,7 +66,7 @@ class EmployeeList(generics.ListCreateAPIView):
         serializer.save(user_id_id=user_id)
 
 
-class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
+class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SerializerEmployee
     permission_classes = (IsAuthenticated,)
 

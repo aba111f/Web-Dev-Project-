@@ -1,79 +1,36 @@
-.employee-page {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 16px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  
-  .employee-page h2 {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-  
-  .employee-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  
-  .employee-form .row {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .employee-form input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .employee-form label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .employee-form button {
-    align-self: start;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    background: #007bff;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .employee-form button[disabled] {
-    background: #aaa;
-    cursor: not-allowed;
-  }
-  
-  .employee-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .employee-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .employee-list li .inactive {
-    color: #999;
-    text-decoration: line-through;
-  }
-  
-  .employee-list button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-left: 8px;
-  }
-  
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 1.2em;
+}
+
+.employee-info h3 {
+  margin: 0;
+  color: #333;
+}
+
+.employee-info h3.inactive {
+  color: #999;
+}
+
+.employee-info span {
+  font-weight: normal;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.employee-info p {
+  margin: 4px 0;
+  color: #444;
+}
+
+.employee-actions button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.employee-actions button:hover {
+  background: #f0f0f0;
+}

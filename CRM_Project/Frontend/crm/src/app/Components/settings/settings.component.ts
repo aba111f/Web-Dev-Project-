@@ -12,39 +12,36 @@ import { JsonPipe } from '@angular/common';
   styleUrl: './settings.component.css'
 })
 export class SettingsComponent implements OnInit{
-  constructor(private sharedService: SharedService, private authService: AuthService, private fb: FormBuilder){
-    this.profile = {
-      id: 0,
-      FirstName: '',
-      LastName: '',
-      age: 0,
-      username: '',
-      BussinesName: '',
-      PhotoFileName: null,
-      logoName: null,
-      phone_num: '',
-      password: '',
-      mail: ''
-    };
+  constructor(private sharedService: SharedService, private authService: AuthService, private fb: FormBuilder){}
+  profile: Profile = {
+    id: 0,
+    username: "",
+    FirstName: "",
+    LastName: "",
+    password: "",
+    mail: "",
+    phone_num: "",
+    age: 0,
+    PhotoFileName: null,
+    BussinesName: "",
+    logoName: null
   }
 
-  profile : Profile;
   changedProfile!: Profile;
-
   photoPreviewPath: string = "";
   logoPreviewPath: string = "";
 
 
-
+  id = localStorage.getItem('user_id');
   ngOnInit(): void {
-      this.sharedService.profile$.subscribe(profile => {
-        if(profile){
-          this.profile = profile;
+      this.authService.getProfile(Number(this.id)).subscribe({
+        next: (res) => {
+          this.profile = res;
+          this.changedProfile = { ...res };
+        },
+        error: (err) => {
+          alert("error " + err);
         }
-        this.changedProfile = { ...this.profile };
-
-        // this.logoPreviewPath = this.profile?.logoName;
-        console.log(this.profile);
       });
       
   };
@@ -52,13 +49,14 @@ export class SettingsComponent implements OnInit{
   onSelectedLogo(event: any){
     const file: File = event.target.files[0];
     if(file){
-      
+      this.changedProfile.logoName = file;
       this.logoPreviewPath = URL.createObjectURL(file);
     }
   };
   onSelectedPhoto(event: any){
     const file: File = event.target.files[0];
     if(file){
+      this.changedProfile.PhotoFileName = file;
       this.photoPreviewPath = URL.createObjectURL(file);
     }
   };
@@ -66,24 +64,34 @@ export class SettingsComponent implements OnInit{
   
   change(){
     const formData = new FormData();
-    formData.append('FirstName', this.changedProfile.FirstName);
-    formData.append('LastName', this.changedProfile.LastName);
-    formData.append('username', this.changedProfile.username);
-    formData.append('phone_num', this.changedProfile.phone_num);
-    formData.append('mail', this.changedProfile.mail);
-    formData.append('PhotoFileName', this.changedProfile.PhotoFileName as File);
-    formData.append('logoName', this.changedProfile.logoName as File);
-    formData.append('age', this.changedProfile.age.toString());
-    formData.append('BussinesName', this.changedProfile.BussinesName);
+    for(let key in this.profile){
+      const initVal = this.profile[key as keyof Profile];
+      const changedVal = this.changedProfile[key as keyof Profile];
+
+      if(changedVal !== initVal){
+        if (changedVal instanceof File) {
+          console.log("Appending file:", key, changedVal);
+          formData.append(key, changedVal as File);
+          
+        } else {
+          if(changedVal){
+            console.log("Appending file:", key, changedVal);
+            formData.append(key, changedVal.toString());
+            
+          }
+        }
+      }
+      
+    }
     
     
-    this.authService.updateData(this.profile.id, formData).subscribe(
-      res => {
-        alert(res + "Successfully updated");
-        
-      },
-      err => {
-        alert("some error while updating"+ err);
+    this.authService.updateData(this.profile.id, formData).subscribe({
+        next: (res) => {
+          alert("successfullly updated!!!" + res);
+        },
+        error: (err) => {
+          alert("some error while updating"+ err);
+        }
       }
     );
   };

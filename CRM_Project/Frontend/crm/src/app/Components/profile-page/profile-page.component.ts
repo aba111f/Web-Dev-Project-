@@ -58,7 +58,6 @@ export class ProfilePageComponent implements OnInit {
       this.photoPreview = data.PhotoFileName || null;
       this.logoPreview = data.logoName || null;
 
-      console.log(this.photoPreview);
       const profile: Profile = {
         id: data.id,
         FirstName: data.FirstName,
