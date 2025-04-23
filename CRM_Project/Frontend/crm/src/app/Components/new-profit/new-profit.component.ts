@@ -9,19 +9,18 @@ import { CommonModule } from '@angular/common';
   selector: 'app-new-profit',
   templateUrl: './new-profit.component.html',
   imports: [FormsModule, CommonModule],
-  styleUrls: ['./new-profit.component.css']
+  styleUrls: ['./new-profit.component.css'] 
 })
 export class NewProfitComponent {
+  today: number = Date.now();
+  
   newProfit: Profit;
   successMessage: string = '';
   errorMessage: string = '';
-  dateString: string; 
 
   constructor(private service: ProfitService) {
-    const today = new Date();
-    this.dateString = this.formatDateForInput(today);
     this.newProfit = {
-      date: today,
+      date: new Date(), 
       profit: 0,
       user_id: 0 
     };
@@ -31,9 +30,12 @@ export class NewProfitComponent {
     this.successMessage = '';
     this.errorMessage = '';
 
-    this.newProfit.date = new Date(this.dateString);
+    const profitToSend: Profit = {
+      ...this.newProfit,
+      date: new Date(this.newProfit.date)
+    };
 
-    this.service.addProfit(this.newProfit).subscribe({
+    this.service.addProfit(profitToSend).subscribe({
       next: () => {
         this.successMessage = 'Profit added successfully!';
         this.resetForm();
@@ -44,15 +46,9 @@ export class NewProfitComponent {
     });
   }
 
-  private formatDateForInput(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
-
   resetForm() {
-    const today = new Date();
-    this.dateString = this.formatDateForInput(today);
     this.newProfit = {
-      date: today,
+      date: new Date(),
       profit: 0,
       user_id: 0
     };

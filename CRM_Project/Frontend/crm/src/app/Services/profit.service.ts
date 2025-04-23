@@ -18,7 +18,7 @@ export class ProfitService {
     if (!this.userId) {
       throw new Error('User ID not found in localStorage.');
     }
-    return this.http.get<Profit[]>(`${this.baseUrl}${this.userId}`);
+    return this.http.get<Profit[]>(`${this.baseUrl}${this.userId}/`);
   }
 
 
@@ -29,10 +29,15 @@ export class ProfitService {
     
     const profitWithUser = {
       ...profit,
+      date: this.formatDateForBackend(profit.date),
       user_id: Number(this.userId)
     };
+    console.log(profitWithUser)
+    return this.http.post<Profit>(`${this.baseUrl}${this.userId}/`, profitWithUser);
+  }
 
-    return this.http.post<Profit>(`this.baseUrl${this.userId}`, profitWithUser);
+  private formatDateForBackend(date: Date): string {
+    return date.toISOString().split('T')[0]; 
   }
 
 }

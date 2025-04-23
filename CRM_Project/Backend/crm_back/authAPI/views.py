@@ -33,7 +33,7 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
 
 class Graphics(generics.GenericAPIView):
     model = None
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
         if self.model is None:
