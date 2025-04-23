@@ -1,16 +1,44 @@
 <div class="simple-form">
     <h3>Add Profit</h3>
-    <form (ngSubmit)="onSubmit()">
-      <div>
-        <label>Date:</label>
-        <input type="date" [(ngModel)]="newProfit.date" name="date" required>
+    
+    <form (ngSubmit)="onSubmit()" #profitForm="ngForm">
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input 
+          type="date" 
+          [(ngModel)]="dateString" 
+          name="date" 
+          id="date"
+          required
+          class="form-control">
       </div>
       
-      <div>
-        <label>Amount:</label>
-        <input type="number" [(ngModel)]="newProfit.profit" name="profit" min="0" required>
+      <div class="form-group">
+        <label for="profit">Amount:</label>
+        <input 
+          type="number" 
+          [(ngModel)]="newProfit.profit" 
+          name="profit" 
+          id="profit"
+          min="0" 
+          step="0.01"
+          required
+          class="form-control">
       </div>
       
-      <button type="submit">Add</button>
+      <button 
+        type="submit" 
+        class="submit-btn"
+        [disabled]="profitForm.invalid">
+        Add Profit
+      </button>
+  
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+  
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
     </form>
   </div>
