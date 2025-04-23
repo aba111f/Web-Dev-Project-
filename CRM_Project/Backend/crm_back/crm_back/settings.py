@@ -1,3 +1,4 @@
+import datetime
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -143,3 +144,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+JWT_AUTH = {
+    # how long the original token is valid for
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+
+    # allow refreshing of tokens
+    'JWT_ALLOW_REFRESH': True,
+
+    # this is the maximum time AFTER the token was issued that
+    # it can be refreshed.  exprired tokens can't be refreshed.
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
