@@ -17,6 +17,8 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework_simplejwt.views import TokenRefreshView
+from .serializers import CustomTokenRefreshSerializer
 # Create your views here.
 # @api_view(['POST'])
 class ListProfile(generics.CreateAPIView):
@@ -50,6 +52,9 @@ class CustomLoginView(APIView):
                 return Response({'detail': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
         except Profile.DoesNotExist:
             return Response({'detail': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+class CustomTokenRefreshView(TokenRefreshView):
+    serializer_class = CustomTokenRefreshSerializer
         
 
 

@@ -11,7 +11,7 @@ urlpatterns = [
 
     # Auth
     path('login/', CustomLoginView.as_view()),
-
+    path('refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
     # Employee
     path('profiles/<int:user_id>/employees/', EmployeeListCreate.as_view()),
     path('profiles/<int:user_id>/employees/<int:pk>/', EmployeeDetail.as_view()),

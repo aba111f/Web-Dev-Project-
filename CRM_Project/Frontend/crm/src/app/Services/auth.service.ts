@@ -52,7 +52,7 @@ export class AuthService {
 
   refreshdata(): Observable<Token> {
     const refresh = localStorage.getItem('refresh');
-    return this.http.post<Token>(this.APIUrl + 'refresh/',
+    return this.http.post<Token>(this.APIUrl + 'api/refresh/',
       {
         refresh
       }
@@ -92,5 +92,8 @@ export class AuthService {
 
   updateData(id:number, data: FormData){
     return this.http.patch(this.APIUrl+'api/profiles/'+id+'/', data);
+  }
+  deleteData(id: number){
+    return this.http.delete(this.APIUrl+'api/profiles/'+id+'/');
   }
 }

@@ -9,7 +9,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const access = localStorage.getItem('access');
   const service = inject(AuthService);
 
-  if (req.url.includes('/api/login/') || req.url.includes('/refresh/')) {
+  if (req.url.includes('/api/login/') || req.url.includes('api/refresh/')) {
     return next(req);
   }
 

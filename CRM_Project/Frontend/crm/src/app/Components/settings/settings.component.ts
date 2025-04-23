@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedService } from '../../Services/shared.service';
 import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../Services/auth.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -11,8 +13,8 @@ import { JsonPipe } from '@angular/common';
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
-export class SettingsComponent implements OnInit{
-  constructor(private sharedService: SharedService, private authService: AuthService, private fb: FormBuilder){}
+export class SettingsComponent implements OnInit, OnDestroy{
+  constructor(private sharedService: SharedService, private authService: AuthService, private router: Router){}
   profile: Profile = {
     id: 0,
     username: "",
@@ -26,7 +28,7 @@ export class SettingsComponent implements OnInit{
     BussinesName: "",
     logoName: null
   }
-
+  private destroy$ = new Subject<void>();
   changedProfile!: Profile;
   photoPreviewPath: string = "";
   logoPreviewPath: string = "";
@@ -45,6 +47,10 @@ export class SettingsComponent implements OnInit{
       });
       
   };
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   onSelectedLogo(event: any){
     const file: File = event.target.files[0];
@@ -95,4 +101,25 @@ export class SettingsComponent implements OnInit{
       }
     );
   };
+
+
+
+  deleteProfile(){
+    this.authService.deleteData(Number(this.id)).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
+      next: (res) => {
+        console.log("User deleted:", res);
+        localStorage.removeItem('user_id');
+        this.router.navigate(['/register']);
+      },
+      error: (err) => {
+        console.error("Failed to delete user:", err);
+        alert("Error deleting user");
+      }
+
+    });
+    
+  }
+  
 }
