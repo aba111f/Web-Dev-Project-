@@ -31,100 +31,6 @@ class actionsWithProfile(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class Graphics(generics.GenericAPIView):
-    model = None
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, *args, **kwargs):
-        if self.model is None:
-            return Response({"error": "Model is not defined."}, status=500)
-
-        user_id = kwargs.get('id') or request.query_params.get('id')
-        if not user_id:
-            return Response(
-                {"error": "User id not provided. Pass it as /.../<id>/ or ?id=<id>."},
-                status=400
-            )
-
-        try:
-            queryset = self.model.objects.filter(user_id=int(user_id))
-        except ValueError:
-            return Response({"error": "Invalid user id."}, status=400)
-
-        data = [model_to_dict(obj) for obj in queryset]
-        return Response(data)
-
-    def post(self, request, *args, **kwargs):
-
-        if self.model is None:
-            return Response({"error": "Model is not defined."}, status=500)
-
-        user_id = kwargs.get('id') or request.query_params.get('id')
-        if not user_id:
-            return Response(
-                {"error": "User id not provided. Pass it as /.../<id>/ or ?id=<id>."},
-                status=400
-            )
-
-        payload = request.data.copy()
-        payload['user_id'] = int(user_id)
-
-        try:
-            instance = self.model.objects.create(**payload)
-        except Exception as e:
-            return Response(
-                {"error": f"Could not create: {str(e)}"},
-                status=400
-            )
-
-        return Response(model_to_dict(instance), status=status.HTTP_201_CREATED)
-
-    def delete(self, request, *args, **kwargs):
-
-        if self.model is None:
-            return Response({"error": "Model is not defined."}, status=500)
-
-        user_id = kwargs.get('id') or request.query_params.get('id')
-        obj_id  = kwargs.get('obj_id') or request.query_params.get('obj_id')
-        if not user_id or not obj_id:
-            return Response(
-                {"error": "Both user id and object id must be provided."},
-                status=400
-            )
-
-        try:
-            inst = self.model.objects.get(pk=int(obj_id), user_id=int(user_id))
-        except self.model.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        inst.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class getGraphicsTotalProfit(Graphics):
-    model = TotalProfit
-    # permission_classes = (IsAuthenticated,)
-
-class getGraphicsActiveClients(Graphics):
-    model = ActiveClient
-    # permission_classes = (IsAuthenticated,)
-
-# class getGraphicsQuarterlyRevenue(Graphics):
-#     model = QuarterlyRevenue
-
-class getGraphicsActiveProjects(Graphics):
-    model = ActiveProject
-    # permission_classes = (IsAuthenticated,)
-
-# @api_view(['POST'])
-# @permission_classes(['AllowAny'])
-# def SaveFile(request):
-#     if 'uploadedFile' not in request.FILES:
-#         return Response({"error": "No file uploaded"}, status=400)
-    
-#     file = request.FILES['uploadedFile']
-#     file_name = default_storage.save(file.name, file)
-#     return Response({"filename": file_name})
-
 
 class CustomLoginView(APIView):
     
@@ -167,3 +73,51 @@ class EmployeeActions(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         return Employee.objects.filter(user_id=user_id)
+    
+
+
+
+# TotalProfit
+class TotalProfitListCreate(generics.ListCreateAPIView):
+    serializer_class = TotalProfitSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return TotalProfit.objects.filter(user_id_id=user_id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id_id=self.kwargs['user_id'])
+
+class TotalProfitDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TotalProfit.objects.all()
+    serializer_class = TotalProfitSerializer
+
+# ActiveClient
+class ActiveClientListCreate(generics.ListCreateAPIView):
+    serializer_class = ActiveClientSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return ActiveClient.objects.filter(user_id_id=user_id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id_id=self.kwargs['user_id'])
+
+class ActiveClientDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ActiveClient.objects.all()
+    serializer_class = ActiveClientSerializer
+
+# ActiveProject
+class ActiveProjectListCreate(generics.ListCreateAPIView):
+    serializer_class = ActiveProjectSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return ActiveProject.objects.filter(user_id_id=user_id)
+
+    def perform_create(self, serializer):
+        serializer.save(user_id_id=self.kwargs['user_id'])
+
+class ActiveProjectDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ActiveProject.objects.all()
+    serializer_class = ActiveProjectSerializer
