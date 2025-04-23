@@ -3,11 +3,11 @@
   
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="employee-form">
       <div class="row">
-        <input formControlName="FirstName" placeholder="Имя" />
-        <input formControlName="LastName"  placeholder="Фамилия" />
+        <input formControlName="first_name" placeholder="Имя" />
+        <input formControlName="last_name"  placeholder="Фамилия" />
       </div>
       <div class="row">
-        <input formControlName="mail" placeholder="Почта" type="email" />
+        <input formControlName="email" placeholder="Почта" type="email" />
         <input formControlName="specialization" placeholder="Специализация" />
       </div>
       <div class="row">
@@ -26,7 +26,7 @@
     <ul class="employee-list">
       <li *ngFor="let emp of employees">
         <span [class.inactive]="!emp.is_active">
-          {{ emp.FirstName }} {{ emp.LastName }} ({{ emp.specialization }})
+          {{ emp.first_name }} {{ emp.last_name }} ({{ emp.specialization }})
         </span>
         <button (click)="edit(emp)">✎</button>
         <button (click)="delete(emp)">✖</button>

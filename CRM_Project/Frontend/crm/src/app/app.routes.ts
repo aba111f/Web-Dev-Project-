@@ -7,7 +7,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { ProfitGraphComponent } from './Components/profit-graph/profit-graph.component';
 import { ActiveClientsComponent } from './Components/active-clients/active-clients.component';
 import { SettingsComponent } from './Components/settings/settings.component';
-import { EmployeePageComponent } from './Components/employee/employee-page.component';
+import { EmployeePageComponent } from './Components/employee-page/employee-page.component';
 
 export const routes: Routes = [
     {
