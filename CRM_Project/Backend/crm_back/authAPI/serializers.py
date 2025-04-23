@@ -5,7 +5,7 @@ class SerializerProfile(serializers.ModelSerializer):
     class Meta:
         model=Profile
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True, 'required': False}
         }
         exclude = ['is_active', 'is_staff', 'groups', 'user_permissions']
     
