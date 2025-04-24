@@ -37,6 +37,22 @@ export class ProfitService {
     return this.http.post<Profit>(`${this.baseUrl}${this.userId}/totalprofit/`, profitWithUser);
   }
 
+  updateProfit(profit: Profit): Observable<Profit> {
+    if (!this.userId) {
+      throw new Error('User ID not found in localStorage.');
+    }
+    if (!profit.id) {
+      throw new Error('Profit ID is required for update.');
+    }
+
+    const updatedData = {
+      ...profit,
+      date: this.formatDateForBackend(profit.date)
+    };
+    
+    return this.http.put<Profit>(`${this.baseUrl}${this.userId}/totalprofit/${profit.id}/`, updatedData);
+  }
+
   deleteProfit(profitId: number | undefined): Observable<any> {
     if (!this.userId) {
       throw new Error('User ID not found in localStorage.');

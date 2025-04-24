@@ -15,10 +15,22 @@
       </thead>
       <tbody>
         <tr *ngFor="let profit of profits">
-          <td>{{ profit.date | date:'mediumDate' }}</td>
-          <td>{{ profit.profit | currency }}</td>
           <td>
-            <button (click)="deleteProfit(profit.id)" class="btn-delete">Delete</button>
+            <span *ngIf="editedProfit?.id !== profit.id">{{ profit.date | date:'mediumDate' }}</span>
+            <input *ngIf="editedProfit?.id === profit.id" type="date" [(ngModel)]="editData.date">
+          </td>
+          <td>
+            <span *ngIf="editedProfit?.id !== profit.id">{{ profit.profit | currency }}</span>
+            <input *ngIf="editedProfit?.id === profit.id" type="number" [(ngModel)]="editData.profit" step="0.01">
+          </td>
+          <td class="actions">
+            <button *ngIf="editedProfit?.id !== profit.id" (click)="startEdit(profit)" class="btn-edit">Edit</button>
+            <button *ngIf="editedProfit?.id !== profit.id" (click)="deleteProfit(profit.id)" class="btn-delete">Delete</button>
+            
+            <div *ngIf="editedProfit?.id === profit.id" class="edit-actions">
+              <button (click)="saveEdit()" class="btn-save" style="">Save</button>
+              <button (click)="cancelEdit()" class="btn-cancel">Cancel</button>
+            </div>
           </td>
         </tr>
       </tbody>
