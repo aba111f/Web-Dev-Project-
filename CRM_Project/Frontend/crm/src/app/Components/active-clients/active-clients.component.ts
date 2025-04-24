@@ -68,6 +68,18 @@ export class ActiveClientsComponent implements OnInit, OnDestroy{
       this.chart?.update();
     });
   }
+
+  onClientAdded(): void {
+    this.activeClientsService.getActiveClients().pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.clients = data;
+        this.activeClients = this.clients.filter(c => c.is_active).length;
+        this.inactiveClients = this.clients.length - this.activeClients;
+
+        this.pieChartData.datasets[0].data = [this.activeClients, this.inactiveClients];
+        this.chart?.update();
+      });
+  }
   
 
   pieChartOptions: ChartConfiguration<'pie'>['options'] = {

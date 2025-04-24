@@ -27,8 +27,10 @@ export class ActiveClientsService {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage.');
       }
+
+      console.log(client);
     
-      return this.http.post<ActiveClients>(`${this.baseUrl}${this.userId}/`, client);
+      return this.http.post<ActiveClients>(`${this.baseUrl}${this.userId}/activeclient/`, client);
     }
 
     updateClientStatus(clientId: number, is_active: boolean): Observable<any> {
@@ -38,12 +40,12 @@ export class ActiveClientsService {
       });
     }
 
-    deleteClient(id: number): Observable<any> {
+    deleteClient(clientId: number): Observable<any> {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage.');
       }
     
-      return this.http.delete(`${this.baseUrl}${this.userId}/activeclient/${id}/`);
+      return this.http.delete(`${this.baseUrl}${this.userId}/activeclient/${clientId}/`);
     }
     
     
