@@ -36,5 +36,5 @@
   }
   
   .sidebar{
-    position: inherit;
+    display: flex;
   }
