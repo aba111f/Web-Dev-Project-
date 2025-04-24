@@ -45,7 +45,7 @@ export class AuthService {
       tap((token: Token) => {
         localStorage.setItem('access', token.access);
         localStorage.setItem('refresh', token.refresh);
-        localStorage.setItem('user_id', token.user_id.toString());
+        localStorage.setItem('user_id', token.user_id);
       })
     );
   }
@@ -61,7 +61,7 @@ export class AuthService {
       tap((token: Token) => {
         localStorage.setItem('access', token.access);
         localStorage.setItem('refresh', token.refresh);
-        localStorage.setItem('user_id', token.user_id.toString());
+        localStorage.setItem('user_id', token.user_id);
       }),
       
       catchError( err => {

@@ -116,13 +116,13 @@ export class SettingsComponent implements OnInit, OnDestroy{
         this.router.navigate(['/registration']).then(() => {
           window.location.reload();
         });
-        console.log("User deleted:", res);
+        alert("User deleted: " +  res);
         localStorage.removeItem('user_id');
         localStorage.removeItem('access');
         localStorage.removeItem('refresh');
       },
       error: (err) => {
-        console.error("Failed to delete user:", err);
+        console.error("Failed to delete user: ", err);
         alert("Error deleting user");
       }
 

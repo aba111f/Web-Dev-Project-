@@ -22,7 +22,6 @@ export class ProfilePageComponent implements OnInit {
   constructor(private sharedService: SharedService){}
 
   form!: FormGroup;
-  profileId: number=localStorage.getItem('user_id') ? Number(localStorage.getItem('user_id')) : 0;
   photoPreview: string | ArrayBuffer | null = null;
   logoPreview: string | ArrayBuffer | null = null;
   private destroy$ = new Subject<void>();
@@ -49,36 +48,20 @@ export class ProfilePageComponent implements OnInit {
   }
 
   loadProfile() {
-    let id = this.profileId;
-    if (!id) {
-      const stored = localStorage.getItem('user_id');
-      if (stored) id = Number(stored);
-    }
+
+      const id = localStorage.getItem('user_id');
+      
+    
   
     if (!id) return;
   
-    this.authService.getProfile(id).pipe(takeUntil(this.destroy$))
+    this.authService.getProfile(Number(id)).pipe(takeUntil(this.destroy$))
     .subscribe((data: any) => {
       this.form.patchValue(data);
   
       this.photoPreview = data.PhotoFileName || null;
       this.logoPreview = data.logoName || null;
 
-      const profile: Profile = {
-        id: data.id,
-        FirstName: data.FirstName,
-        LastName: data.LastName,
-        username: data.username,
-        password: data.password,
-        mail: data.mail,
-        PhotoFileName: data.PhotoFileName,
-        logoName: data.logoName,
-        BussinesName: data.BussinesName,
-        phone_num: data.phone_num,
-        age: data.age
-      };
-  
-      this.sharedService.setProfile(profile);
     });
   }
   

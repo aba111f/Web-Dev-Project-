@@ -3,7 +3,6 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Subject, Subscription, takeUntil } from 'rxjs';
-import { SharedService } from '../../Services/shared.service';
 import { Profile } from '../../interfaces/profile';
 
 
@@ -43,7 +42,7 @@ export class NavBarComponent implements OnInit, OnDestroy{
                 this.greeting = this.profile?.FirstName + ' ' + this.profile?.LastName;
               },
               error: (err) => {
-                alert("error " + err);
+                alert("error in navbar" + err);
               }
             });
         }
