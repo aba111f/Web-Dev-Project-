@@ -28,7 +28,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=2),  # токен доступа — 2 дня
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),  # токен обновления — 7 дней
 
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
 # Application definition
 
 INSTALLED_APPS = [
