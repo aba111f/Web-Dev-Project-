@@ -49,13 +49,13 @@ export class ProfilePageComponent implements OnInit {
 
   loadProfile() {
 
-      const id = localStorage.getItem('user_id');
-      
+    const id = Number(localStorage.getItem('user_id'));
+    
     
   
-    if (!id) return;
+    if (isNaN(id)) this.authService.logout();
   
-    this.authService.getProfile(Number(id)).pipe(takeUntil(this.destroy$))
+    this.authService.getProfile(id).pipe(takeUntil(this.destroy$))
     .subscribe((data: any) => {
       this.form.patchValue(data);
   

@@ -27,14 +27,15 @@ export class NavBarComponent implements OnInit, OnDestroy{
   }
   
   ngOnInit(): void {
-      let id = localStorage.getItem('user_id');
+      let id = Number(localStorage.getItem('user_id'));
+      if(isNaN(id)) this.service.logout();
       this.service.isAuthenticated$.pipe(
         takeUntil(this.destroy$)
       ).subscribe(isAuth => {
         this.isLogged = isAuth;
 
         if(this.isLogged){
-          this.service.getProfile(Number(id)).pipe(
+          this.service.getProfile(id).pipe(
             takeUntil(this.destroy$)
           ).subscribe({
               next: (res) => {

@@ -36,8 +36,9 @@ export class SettingsComponent implements OnInit, OnDestroy{
 
   
   ngOnInit(): void {
-      let id = localStorage.getItem('user_id');
-      this.authService.getProfile(Number(id)).pipe(takeUntil(this.destroy$))
+      let id = Number(localStorage.getItem('user_id'));
+      if(isNaN(id)) this.authService.logout();
+      this.authService.getProfile(id).pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
           this.profile = res;
@@ -108,8 +109,9 @@ export class SettingsComponent implements OnInit, OnDestroy{
 
 
   deleteProfile(){
-    const id = localStorage.getItem('user_id');
-    this.authService.deleteData(Number(id)).pipe(
+    const id = Number(localStorage.getItem('user_id'));
+    if(isNaN(id)) this.authService.logout();
+    this.authService.deleteData(id).pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       next: (res) => {
@@ -128,6 +130,9 @@ export class SettingsComponent implements OnInit, OnDestroy{
 
     });
     
+  }
+  cancel(){
+    this.router.navigate(['/']);
   }
   
 }
