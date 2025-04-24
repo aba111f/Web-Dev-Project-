@@ -19,10 +19,9 @@ export class NewProfitComponent {
   errorMessage: string = '';
 
   constructor(private service: ProfitService) {
-    // Initialize newProfit with today's date as the default
     const today = new Date();
     this.newProfit = {
-      date: today, // Default date is today
+      date: today, 
       profit: 0,
       user_id: 0
     };
@@ -37,10 +36,10 @@ export class NewProfitComponent {
     this.successMessage = '';
     this.errorMessage = '';
 
-    // Ensure the date is sent as a Date object
+    
     const profitToSend: Profit = {
       ...this.newProfit,
-      date: new Date(this.newProfit.date) // Convert to Date object if necessary
+      date: new Date(this.newProfit.date) 
     };
 
     this.service.addProfit(profitToSend).pipe(takeUntil(this.destroy$))
@@ -58,7 +57,7 @@ export class NewProfitComponent {
   resetForm() {
     const today = new Date();
     this.newProfit = {
-      date: today, // Reset to today's date
+      date: today, 
       profit: 0,
       user_id: 0
     };

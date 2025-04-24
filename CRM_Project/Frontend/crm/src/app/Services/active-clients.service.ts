@@ -37,6 +37,15 @@ export class ActiveClientsService {
         is_active: is_active
       });
     }
+
+    deleteClient(id: number): Observable<any> {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage.');
+      }
+    
+      return this.http.delete(`${this.baseUrl}${this.userId}/activeclient/${id}/`);
+    }
+    
     
   
   

@@ -7,6 +7,9 @@
     </canvas>
   </div>
 
+  
+<app-new-client></app-new-client>
+
   <div class="client-list-container">
         <h2 class="title">Client List</h2>
         <table class="client-table">
@@ -32,9 +35,11 @@
                   <input type="checkbox" [checked]="client.is_active" (change)="toggleStatus(client)">
                   <span class="slider"></span>
                 </label>
+                <button class="delete-btn" (click)="deleteClient(client)">🗑</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+
       
