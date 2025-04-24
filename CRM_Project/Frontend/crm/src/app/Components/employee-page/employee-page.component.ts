@@ -71,9 +71,9 @@ export class EmployeePageComponent implements OnInit, OnDestroy {
     
     if (err.status === 400) {
       let errorMessage = 'Ошибки валидации:';
-      for (const [field, errors] of Object.entries(err.error)) {
-        // errorMessage += `\n• ${field}: ${errors.join(', ')}`;
-      }
+      // for (const [field, errors] of Object.entries(err.error)) {
+      //   // errorMessage += `\n• ${field}: ${errors.join(', ')}`;
+      // }
       alert(errorMessage);
     } else {
       alert(`Ошибка сервера: ${err.statusText}`);
