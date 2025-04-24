@@ -4,7 +4,9 @@ import { ProfitService } from '../../Services/profit.service';
 import { Profit } from '../../interfaces/profit';
 import { ActiveClients } from '../../interfaces/active-clients';
 import { ActiveClientsService } from '../../Services/active-clients.service';
+import { ProjectsService } from '../../Services/projects.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Project } from '../../interfaces/project';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,8 +19,10 @@ import { Subject, takeUntil } from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
   activeClientsArr: ActiveClients[] = [];
   profits: Profit[] = []; 
+  projects: Project[] = []
   activeClients: number = 0;
   totalProfit: number = 0;
+  activeProjects: number = 0;
   
   quarterlyRevenue: number = 0;
   currentQuarter: number;
@@ -30,7 +34,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private datePipe: DatePipe, 
     private service: ProfitService,
-    private service2: ActiveClientsService
+    private service2: ActiveClientsService,
+    private service3: ProjectsService
   ) {
     const now = new Date();
     this.today = this.datePipe.transform(now, 'yyyy-MM-dd');
@@ -64,6 +69,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private calculateActiveClients(): void {
     this.activeClients = this.activeClientsArr.filter(client => client.is_active).length;
+  }
+
+  private calculateActiveProjects(): void {
+    this.activeProjects = this.projects.filter(client => client.is_active).length;
   }
 
   private calculateQuarterlyRevenue(): void {
