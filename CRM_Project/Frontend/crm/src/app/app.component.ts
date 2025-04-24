@@ -20,30 +20,15 @@ export class AppComponent implements OnInit{
   isPresed: boolean = false;
   isLogged: boolean = false;
   private destroy$ = new Subject<void>();
-  profile: Profile | null = null;
 
-  
+
+
   constructor(private service: AuthService){}
   ngOnInit(): void {
-        let id = localStorage.getItem('user_id');
         this.service.isAuthenticated$.pipe(
           takeUntil(this.destroy$)
         ).subscribe(isAuth => {
           this.isLogged = isAuth;
-  
-          if(this.isLogged){
-            this.service.getProfile(Number(id)).pipe(
-              takeUntil(this.destroy$)
-            ).subscribe({
-                next: (res) => {
-                  this.profile = res;
-                  
-                },
-                error: (err) => {
-                  alert("error " + err);
-                }
-              });
-          }
         });
         
         

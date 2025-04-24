@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class LoginPageComponent implements OnDestroy {
   token!: Token;
   authModel: AuthModel;
+  error: string = "";
   private destroy$ = new Subject<void>();
   constructor(private service: AuthService, private router: Router){
     this.authModel = {} as AuthModel;
@@ -28,14 +29,18 @@ export class LoginPageComponent implements OnDestroy {
   }
   loginData(){
     this.service.logindata(this.authModel).pipe(takeUntil(this.destroy$))
-    .subscribe(token => {
-      this.service.logged();
-      localStorage.setItem('user_id', token.user_id.toString());
-      
-      this.router.navigate(['/profile']).then(() => {
-        window.location.reload();
-      });
-
+    .subscribe({
+      next: (token) => {
+        this.service.logged();
+        localStorage.setItem('user_id', token.user_id);
+        
+        this.router.navigate(['/profile']).then(() => {
+          window.location.reload();
+        });
+      },
+      error: (err) => {
+        this.error = "No such username or invalid password";
+      }
     }
     );
     

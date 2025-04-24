@@ -1,5 +1,6 @@
 <form>
-    <input type="text" placeholder="Username" [(ngModel)] = "authModel.username" name="username">
-    <input type="password" placeholder="Password" [(ngModel)] = "authModel.password" name="password">
-    <button type="submit" (click)="loginData()">Login</button>
+    <input type="text" placeholder="Username" [(ngModel)] = "authModel.username" name="username" required>
+    <input type="password" placeholder="Password" [(ngModel)] = "authModel.password" name="password" required>
+    <button type="submit" (click)="loginData()"[disabled]="!authModel.username || !authModel.password">Login</button>
 </form>
+<h2 style="text-align: center; color: rgb(159, 1, 1);">{{error}}</h2>
