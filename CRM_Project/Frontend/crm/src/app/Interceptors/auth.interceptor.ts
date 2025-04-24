@@ -1,9 +1,10 @@
 import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from '../Services/auth.service';
 import { inject } from '@angular/core';
 
-let isRefreshed = false;
+let isRefreshing = false;
+let refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const access = localStorage.getItem('access');
@@ -24,23 +25,30 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 const refreshToken = (service: AuthService, req: HttpRequest<any>, next: HttpHandlerFn) => {
-  if (!isRefreshed) {
-    isRefreshed = true;
+  if (!isRefreshing) {
+    isRefreshing = true;
+    refreshTokenSubject.next(null);
+
     return service.refreshdata().pipe(
       switchMap(res => {
-        isRefreshed = false;
+        isRefreshing = false;
+        localStorage.setItem('access', res.access);
+        refreshTokenSubject.next(res.access);
         return next(addToken(req, res.access));
       }),
       catchError(err => {
-        isRefreshed = false;
+        isRefreshing = false;
         service.logout();
         return throwError(() => err);
       })
     );
+  } else {
+    return refreshTokenSubject.pipe(
+      filter(token => token !== null),
+      take(1),
+      switchMap(token => next(addToken(req, token!)))
+    );
   }
-
-  const access = localStorage.getItem('access');
-  return next(addToken(req, access!));
 };
 
 const addToken = (req: HttpRequest<any>, access: string) => {

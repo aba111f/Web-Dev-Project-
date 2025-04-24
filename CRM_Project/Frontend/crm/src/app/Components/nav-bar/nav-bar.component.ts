@@ -14,11 +14,10 @@ import { Profile } from '../../interfaces/profile';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent implements OnInit, OnDestroy{
-  private sub!: Subscription;
   private destroy$ = new Subject<void>();
   profile: Profile | null = null;
-  greeting: string = "";
-  constructor(private router: Router, private service: AuthService, private sharedService: SharedService){
+  greeting: string = "Hello user";
+  constructor(private router: Router, private service: AuthService){
     
   }
   isLogged = false;
@@ -26,24 +25,30 @@ export class NavBarComponent implements OnInit, OnDestroy{
     this.service.logout();
     this.isLogged = this.service.isLoggedIn();
     this.profile = null;
-    this.greeting = "Hello user!";
   }
-  id = localStorage.getItem('user_id');
+  
   ngOnInit(): void {
-      this.service.isAuthenticated$.subscribe(isAuth => {
+      let id = localStorage.getItem('user_id');
+      this.service.isAuthenticated$.pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(isAuth => {
         this.isLogged = isAuth;
-      });
-      this.service.getProfile(Number(this.id)).pipe(
+
+        if(this.isLogged){
+          this.service.getProfile(Number(id)).pipe(
             takeUntil(this.destroy$)
           ).subscribe({
-        next: (res) => {
-          this.profile = res;
-          this.greeting = this.profile?.FirstName + ' ' + this.profile?.LastName;
-        },
-        error: (err) => {
-          alert("error " + err);
+              next: (res) => {
+                this.profile = res;
+                this.greeting = this.profile?.FirstName + ' ' + this.profile?.LastName;
+              },
+              error: (err) => {
+                alert("error " + err);
+              }
+            });
         }
       });
+      
       
   }
   ngOnDestroy() {

@@ -18,7 +18,6 @@ import { Subject, takeUntil } from 'rxjs';
 export class ProfilePageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
-  private http = inject(HttpClient);
   profile!: Profile;
   constructor(private sharedService: SharedService){}
 
@@ -84,47 +83,4 @@ export class ProfilePageComponent implements OnInit {
   }
   
 
-  onPhotoChange(event: any) {
-    const file = event.target.files[0];
-    this.form.patchValue({ PhotoFile: file });
-
-    const reader = new FileReader();
-    reader.onload = () => (this.photoPreview = reader.result);
-    reader.readAsDataURL(file);
-  }
-
-  onLogoChange(event: any) {
-    const file = event.target.files[0];
-    this.form.patchValue({ logoFile: file });
-
-    const reader = new FileReader();
-    reader.onload = () => (this.logoPreview = reader.result);
-    reader.readAsDataURL(file);
-  }
-
-  submit() {
-    const formData = new FormData();
-    const formValue = this.form.value;
-  
-    if (formValue.username) formData.append('username', formValue.username);
-    if (formValue.FirstName) formData.append('FirstName', formValue.FirstName);
-    if (formValue.LastName) formData.append('LastName', formValue.LastName);
-    if (formValue.password) formData.append('password', formValue.password);
-    if (formValue.mail) formData.append('mail', formValue.mail);
-    if (formValue.phone_num) formData.append('phone_num', formValue.phone_num);
-    if (formValue.age !== null && formValue.age !== undefined) {
-      formData.append('age', formValue.age.toString());
-    }
-    if (formValue.BussinesName) formData.append('BussinesName', formValue.BussinesName);
-  
-
-    if (formValue.PhotoFile instanceof File) {
-      formData.append('PhotoFile', formValue.PhotoFile);
-    }
-    if (formValue.logoFile instanceof File) {
-      formData.append('logoFile', formValue.logoFile);
-    }
-  
-    
-  }
 }

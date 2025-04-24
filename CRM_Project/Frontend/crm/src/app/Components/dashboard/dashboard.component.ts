@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ProfitService } from '../../Services/profit.service';
 import { Profit } from '../../interfaces/profit';
 import { ActiveClients } from '../../interfaces/active-clients';
 import { ActiveClientsService } from '../../Services/active-clients.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import { ActiveClientsService } from '../../Services/active-clients.service';
   styleUrls: ['./dashboard.component.css'],
   providers: [DatePipe]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   activeClientsArr: ActiveClients[] = [];
   profits: Profit[] = []; 
   activeClients: number = 0;
@@ -23,6 +24,8 @@ export class DashboardComponent implements OnInit {
   currentQuarter: number;
   currentYear: number;
   today: string | null;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private datePipe: DatePipe, 
@@ -36,18 +39,22 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getTotalProfit().subscribe(data => {
+    this.service.getTotalProfit().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.profits = data;
       this.calculateTotalProfit();
       this.calculateQuarterlyRevenue();
     });
 
-    this.service2.getActiveClients().subscribe(data => {
+    this.service2.getActiveClients().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.activeClientsArr = data;
       this.calculateActiveClients();
     
     }
     )
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete(); 
   }
 
 

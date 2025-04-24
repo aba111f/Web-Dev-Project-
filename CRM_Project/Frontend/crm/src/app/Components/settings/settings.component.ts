@@ -34,16 +34,17 @@ export class SettingsComponent implements OnInit, OnDestroy{
   logoPreviewPath: string = "";
 
 
-  id = localStorage.getItem('user_id');
+  
   ngOnInit(): void {
-      this.authService.getProfile(Number(this.id)).pipe(takeUntil(this.destroy$))
+      let id = localStorage.getItem('user_id');
+      this.authService.getProfile(Number(id)).pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
           this.profile = res;
           this.changedProfile = { ...res };
         },
         error: (err) => {
-          alert("error " + err);
+          alert("error in Settings Component " + err);
         }
       });
       
@@ -107,13 +108,16 @@ export class SettingsComponent implements OnInit, OnDestroy{
 
 
   deleteProfile(){
-    this.authService.deleteData(Number(this.id)).pipe(
+    const id = localStorage.getItem('user_id');
+    this.authService.deleteData(Number(id)).pipe(
       takeUntil(this.destroy$)
     ).subscribe({
       next: (res) => {
+        this.router.navigate(['/register']);
         console.log("User deleted:", res);
         localStorage.removeItem('user_id');
-        this.router.navigate(['/register']);
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
       },
       error: (err) => {
         console.error("Failed to delete user:", err);
