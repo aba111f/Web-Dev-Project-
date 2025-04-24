@@ -98,4 +98,12 @@ export class AuthService {
   deleteData(id: number){
     return this.http.delete(this.APIUrl+'api/profiles/'+id+'/');
   }
+
+  getPhotoUrl(photoPath: string): string {
+    return this.PhotoUrl + photoPath;
+  }
+  
+  getLogoUrl(logoPath: string): string {
+    return this.PhotoUrl + logoPath;
+  }
 }

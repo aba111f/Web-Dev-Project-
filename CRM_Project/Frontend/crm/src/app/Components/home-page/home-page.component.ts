@@ -32,4 +32,6 @@ export class HomePageComponent implements OnInit {
     return 'assets/default-image.png';
   }
   
+  
+
 }
