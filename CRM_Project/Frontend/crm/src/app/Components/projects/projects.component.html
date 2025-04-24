@@ -1,0 +1,45 @@
+<div style="max-width: 500px; margin: auto;">
+    <h3 style="text-align: center;">Projects Status</h3>
+    <canvas baseChart
+            [data]="pieChartData"
+            [options]="pieChartOptions"
+            [type]="pieChartType">
+    </canvas>
+  </div>
+
+  
+<app-new-project (projectAdded)="onProjectAdded()"></app-new-project>
+
+  <div class="client-list-container">
+        <h2 class="title">Projects List</h2>
+        <table class="client-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Toggle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let project of projects">
+              <td class="client-name">{{ project.title }}</td>
+              <td>
+                <span class="status">
+                  <strong [ngClass]="project.is_active ? 'active' : 'inactive'">
+                    {{ project.is_active ? 'Active' : 'Inactive' }}
+                  </strong>
+                </span>
+              </td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" [checked]="project.is_active" (change)="toggleStatus(project)">
+                  <span class="slider"></span>
+                </label>
+                <button class="delete-btn" (click)="deleteProject(project)">🗑</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      

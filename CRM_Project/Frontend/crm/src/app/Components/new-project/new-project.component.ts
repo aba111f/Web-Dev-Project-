@@ -1,28 +1,28 @@
 import { Component , EventEmitter, Output} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActiveClients } from '../../interfaces/active-clients';
-import { ActiveClientsService } from '../../Services/active-clients.service';
+import { Project } from '../../interfaces/project';
+import { ProjectsService } from '../../Services/projects.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   standalone: true,
-  selector: 'app-new-client',
-  templateUrl: './new-client.component.html',
-  styleUrls: ['./new-client.component.css'],
+  selector: 'app-new-project',
+  templateUrl: './new-project.component.html',
+  styleUrls: ['./new-project.component.css'],
   imports: [FormsModule, CommonModule]
 })
-export class NewClientComponent {
-  @Output() clientAdded = new EventEmitter<void>();
+export class NewProjectComponent {
+  @Output() projectAdded = new EventEmitter<void>();
 
   private destroy$ = new Subject<void>();
-  newClient: ActiveClients;
+  newProject: Project;
   successMessage = '';
   errorMessage = '';
 
-  constructor(private service: ActiveClientsService) {
-    this.newClient = {
-      name: '',
+  constructor(private service: ProjectsService) {
+    this.newProject = {
+      title: '',
       is_active: true,
       user_id: Number(localStorage.getItem('user_id')) || 0
     };
@@ -37,12 +37,12 @@ export class NewClientComponent {
     this.successMessage = '';
     this.errorMessage = '';
 
-    this.service.addClient(this.newClient).pipe(takeUntil(this.destroy$))
+    this.service.addProject(this.newProject).pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.successMessage = 'Client added successfully!';
           this.resetForm();
-          this.clientAdded.emit();
+          this.projectAdded.emit();
         },
         error: (err) => {
           this.errorMessage = 'Error adding client: ' + (err.error?.message || err.message);
@@ -51,8 +51,8 @@ export class NewClientComponent {
   }
 
   resetForm() {
-    this.newClient = {
-      name: '',
+    this.newProject = {
+      title: '',
       is_active: true,
       user_id: Number(localStorage.getItem('user_id')) || 0
     };

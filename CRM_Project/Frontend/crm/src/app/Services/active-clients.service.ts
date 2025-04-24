@@ -27,8 +27,6 @@ export class ActiveClientsService {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage.');
       }
-
-      console.log(client);
     
       return this.http.post<ActiveClients>(`${this.baseUrl}${this.userId}/activeclient/`, client);
     }

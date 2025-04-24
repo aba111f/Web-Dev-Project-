@@ -8,6 +8,7 @@ import { ProfitGraphComponent } from './Components/profit-graph/profit-graph.com
 import { ActiveClientsComponent } from './Components/active-clients/active-clients.component';
 import { SettingsComponent } from './Components/settings/settings.component';
 import { EmployeePageComponent } from './Components/employee-page/employee-page.component';
+import { ProjectsComponent } from './Components/projects/projects.component';
 
 export const routes: Routes = [
     {
@@ -45,5 +46,9 @@ export const routes: Routes = [
     {
         path:'settings',
         component: SettingsComponent
+    },
+    {
+        path:"activeProjects",
+        component: ProjectsComponent
     }
 ];

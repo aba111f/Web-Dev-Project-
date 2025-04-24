@@ -13,47 +13,42 @@ export class ProjectsService {
 
   constructor(private http: HttpClient) {}
 
-  getTotalProfit(): Observable<Project[]> {
-    
-    if (!this.userId) {
-      throw new Error('User ID not found in localStorage.');
-    }
-    
-    return this.http.get<Project[]>(`${this.baseUrl}${this.userId}/activeproject/`);
-  }
+  getAllProjects(): Observable<Project[]> {
+      
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage.');
+      }
+      
+      return this.http.get<Project[]>(`${this.baseUrl}${this.userId}/activeproject`);
 
-
-  addProfit(profit: Project): Observable<Project> {
-    if (!this.userId) {
-      throw new Error('User ID not found in localStorage.');
-    }
-    
-    const profitWithUser = {
-      ...profit,
-      user_id: Number(this.userId)
-    };
-    console.log(profitWithUser)
-    return this.http.post<Project>(`${this.baseUrl}${this.userId}/activeproject/`, profitWithUser);
-  }
-
-  updateProfit(project: Project): Observable<Project> {
-    if (!this.userId) {
-      throw new Error('User ID not found in localStorage.');
-    }
-    if (!project.id) {
-      throw new Error('Profit ID is required for update.');
     }
 
+  addProject(client: Project): Observable<Project> {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage.');
+      }
     
-    return this.http.put<Project>(`${this.baseUrl}${this.userId}/activeproject/${project.id}/`, project);
-  }
+      return this.http.post<Project>(`${this.baseUrl}${this.userId}/activeproject/`, client);
+    }
 
-  deleteProfit(projectId: number | undefined): Observable<any> {
-    if (!this.userId) {
-      throw new Error('User ID not found in localStorage.');
+    updateProjectStatus(clientId: number, is_active: boolean): Observable<any> {
+      if (!this.userId) throw new Error('User ID not found in localStorage.');
+      return this.http.patch(`${this.baseUrl}${this.userId}/activeproject/${clientId}/`, {
+        is_active: is_active
+      });
+    }
+
+    deleteProject(projectId: number): Observable<any> {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage.');
+      }
+    
+      return this.http.delete(`${this.baseUrl}${this.userId}/activeproject/${projectId}/`);
     }
     
-    return this.http.delete(`${this.baseUrl}${this.userId}/activeproject/${projectId}/`);
-  }
+    
+  
+  
+
 
 }
