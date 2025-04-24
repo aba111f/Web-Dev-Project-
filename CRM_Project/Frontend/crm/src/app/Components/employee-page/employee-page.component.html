@@ -1,22 +1,58 @@
 <div class="employee-page">
   <h2>Сотрудники</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="employee-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="employee-form" novalidate>
     <div class="row">
-      <input formControlName="FirstName" placeholder="Имя" />
-      <input formControlName="LastName" placeholder="Фамилия" />
+      <div class="form-group">
+        <input formControlName="FirstName" placeholder="Имя" />
+        <div class="error" *ngIf="form.controls['FirstName'].invalid && form.controls['FirstName'].touched">
+          <small *ngIf="form.controls['FirstName'].errors?.['required']">Имя обязательно</small>
+          <small *ngIf="form.controls['FirstName'].errors?.['minlength']">Минимум 2 символа</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input formControlName="LastName" placeholder="Фамилия" />
+        <div class="error" *ngIf="form.controls['LastName'].invalid && form.controls['LastName'].touched">
+          <small *ngIf="form.controls['LastName'].errors?.['required']">Фамилия обязательна</small>
+          <small *ngIf="form.controls['LastName'].errors?.['minlength']">Минимум 2 символа</small>
+        </div>
+      </div>
     </div>
+
     <div class="row">
-      <input formControlName="mail" placeholder="Почта" type="email" />
-      <input formControlName="specialization" placeholder="Специализация" />
+      <div class="form-group">
+        <input formControlName="mail" placeholder="Почта" type="email" />
+        <div class="error" *ngIf="form.controls['mail'].invalid && form.controls['mail'].touched">
+          <small *ngIf="form.controls['mail'].errors?.['required']">Почта обязательна</small>
+          <small *ngIf="form.controls['mail'].errors?.['invalidEmail']">Некорректный формат почты</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input formControlName="specialization" placeholder="Специализация" />
+        <div class="error" *ngIf="form.controls['specialization'].invalid && form.controls['specialization'].touched">
+          <small *ngIf="form.controls['specialization'].errors?.['required']">Специализация обязательна</small>
+          <small *ngIf="form.controls['specialization'].errors?.['minlength']">Минимум 2 символа</small>
+        </div>
+      </div>
     </div>
+
     <div class="row">
-      <input formControlName="salary" placeholder="Зарплата" type="number" />
-      <label>
+      <div class="form-group">
+        <input formControlName="salary" placeholder="Зарплата" type="number" />
+        <div class="error" *ngIf="form.controls['salary'].invalid && form.controls['salary'].touched">
+          <small *ngIf="form.controls['salary'].errors?.['required']">Зарплата обязательна</small>
+          <small *ngIf="form.controls['salary'].errors?.['min']">Минимальная зарплата — 1</small>
+        </div>
+      </div>
+
+      <label class="checkbox-label">
         <input type="checkbox" formControlName="is_active" />
         Активен
       </label>
     </div>
+
     <button type="submit" [disabled]="form.invalid">
       {{ editMode ? 'Сохранить' : 'Добавить' }}
     </button>

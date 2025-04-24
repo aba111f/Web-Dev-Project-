@@ -5,6 +5,7 @@ import { Employee, EmployeeCreate } from '../../interfaces/employee';
 import { EmployeeService } from '../../Services/employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-page',
@@ -35,12 +36,12 @@ export class EmployeePageComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = this.fb.group({
-      FirstName: ['', Validators.required],
-      LastName: ['', Validators.required],
-      mail: ['', [Validators.required, Validators.email]],
-      salary: [0, Validators.required],
-      specialization: ['', Validators.required],
-      is_active: [true]
+      FirstName: ['', [Validators.required, Validators.minLength(2)]],
+      LastName: ['', [Validators.required, Validators.minLength(2)]],
+      mail: ['', [Validators.required, this.strictEmailValidator]],
+      specialization: ['', [Validators.required, Validators.minLength(2)]],
+      salary: [null, [Validators.required, Validators.min(1)]],
+      is_active: [true],
     });
   }
 
@@ -128,4 +129,15 @@ export class EmployeePageComponent implements OnInit, OnDestroy {
     if (!confirm(`Удалить ${emp.FirstName} ${emp.LastName}?`)) return;
     this.svc.delete(emp.id).subscribe(() => this.load());
   }
+
+  strictEmailValidator(control: AbstractControl): ValidationErrors | null {
+    const email = control.value;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+    if (!email || emailRegex.test(email)) {
+      return null;
+    }
+    return { invalidEmail: true };
+  }
+  
 }

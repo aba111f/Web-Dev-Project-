@@ -153,3 +153,8 @@ button[type='button']:hover {
     grid-template-columns: 1fr;
   }
 }
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
