@@ -1,3 +1,4 @@
+import os
 from django.db import models
 
 # Create your models here.
@@ -50,6 +51,25 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.FirstName} {self.LastName}"
 
+    def delete(self, *args, **kwargs):
+        """Удаление связанных файлов при удалении профиля"""
+        if self.PhotoFileName:
+            try:
+                file_path = self.PhotoFileName.path
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f"Error deleting profile photo: {str(e)}")
+
+        if self.logoName:
+            try:
+                file_path = self.logoName.path
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                print(f"Error deleting logo: {str(e)}")
+
+        super().delete(*args, **kwargs)
     
 class TotalProfit(models.Model):
     date = models.DateField()

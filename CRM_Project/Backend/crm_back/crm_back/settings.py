@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'authAPI',
     'rest_framework_simplejwt',
-
+    'authAPI.apps.AuthapiConfig',
+    'django_cleanup.apps.CleanupConfig',
 
 ]
 
