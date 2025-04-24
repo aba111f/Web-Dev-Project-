@@ -1,4 +1,26 @@
-<div class="info">
-    <h1>Streamline your workflow with our intuitive CRM solution.</h1>
-    <h3>Start simply with Cliengo – the easy way to manage customers, track leads, and boost productivity.</h3>
-</div>
+<div class="homepage-container">
+    <ng-container *ngIf="isLoggedIn; else guestTemplate">
+      <div class="profile-section">
+        <h2>С возвращением, {{ profile.FirstName }}!</h2>
+        <img class="profile-img" [src]="getImageUrl(profile.PhotoFileName)" alt="Фото профиля">
+        <div class="business-info">
+          <img class="logo-img" [src]="getImageUrl(profile.logoName)" alt="Логотип бизнеса">
+          <h3>{{ profile.BussinesName }}</h3>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #guestTemplate>
+      <div class="guest-section">
+        <h1>Добро пожаловать в нашу CRM-систему!</h1>
+        <p>
+          Это современная платформа для управления клиентами, проектами и бизнес-аналитикой.
+          Вы сможете отслеживать активность клиентов, контролировать доходы и эффективно управлять персоналом.
+        </p>
+        <p>
+          Зарегистрируйтесь или войдите в систему, чтобы начать использовать все возможности нашей CRM.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+  
