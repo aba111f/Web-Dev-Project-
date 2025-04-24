@@ -6,10 +6,10 @@ import { inject } from '@angular/core';
 let isRefreshing = false;
 let refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const access = localStorage.getItem('access');
   const service = inject(AuthService);
-
   if (req.url.includes('/api/login/') || req.url.includes('api/refresh/')) {
     return next(req);
   }

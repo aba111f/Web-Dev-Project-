@@ -113,7 +113,9 @@ export class SettingsComponent implements OnInit, OnDestroy{
       takeUntil(this.destroy$)
     ).subscribe({
       next: (res) => {
-        this.router.navigate(['/register']);
+        this.router.navigate(['/registration']).then(() => {
+          window.location.reload();
+        });
         console.log("User deleted:", res);
         localStorage.removeItem('user_id');
         localStorage.removeItem('access');
