@@ -60,10 +60,10 @@ export class EmployeePageComponent implements OnInit, OnDestroy {
     alert('Заполните все обязательные поля!');
   }
 
-  private handleSuccess() {
+  private handleSuccess(isEdit: boolean) {
     this.load();
     this.resetForm();
-    alert(this.editMode ? 'Данные обновлены!' : 'Сотрудник добавлен!');
+    alert(isEdit ? 'Данные обновлены!' : 'Сотрудник добавлен!');
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -86,17 +86,13 @@ export class EmployeePageComponent implements OnInit, OnDestroy {
       return;
     }
   
-    const formData = {
-      ...this.form.value,
-      user_id: localStorage.getItem('user_id') 
-    };
-  
-    const operation = this.editMode 
-      ? this.svc.update(this.editingId!, formData)
-      : this.svc.create(formData);
+    const isEdit = this.editMode; 
+    const operation = isEdit 
+      ? this.svc.update(this.editingId!, this.form.value)
+      : this.svc.create(this.form.value);
   
     operation.subscribe({
-      next: () => this.handleSuccess(),
+      next: () => this.handleSuccess(isEdit), 
       error: (err) => this.handleError(err)
     });
   }
@@ -118,13 +114,13 @@ export class EmployeePageComponent implements OnInit, OnDestroy {
   resetForm() {
     this.editMode = false;
     this.editingId = null;
-    this.form.reset({ 
-      FirstName: '', 
-      LastName: '', 
-      mail: '', 
-      salary: 0, 
-      specialization: '', 
-      is_active: true 
+    this.form.reset({
+      FirstName: '',
+      LastName: '',
+      mail: '',
+      salary: 0,
+      specialization: '',
+      is_active: true
     });
   }
   
