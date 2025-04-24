@@ -1,25 +1,38 @@
 <div class="homepage-container">
-    <ng-container *ngIf="isLoggedIn; else guestTemplate">
-      <div class="profile-section">
-        <h2>С возвращением, {{ profile.FirstName }}!</h2>
-        <img class="profile-img" [src]="getImageUrl(profile.PhotoFileName)" alt="Фото профиля">
-        <div class="business-info">
-          <img class="logo-img" [src]="getImageUrl(profile.logoName)" alt="Логотип бизнеса">
-          <h3>{{ profile.BussinesName }}</h3>
-        </div>
-      </div>
+    <ng-container *ngIf="isLoggedIn && profile; else guestTemplate">
+        <div class="profile-section">
+            <div class="name-photo-row">
+              <h2 class="profile-name">С возвращением, {{ profile.FirstName }}!</h2>
+              <img
+                class="profile-img"
+                *ngIf="profile.PhotoFileName"
+                [src]="profile.PhotoFileName"
+                alt="Фото профиля"
+              />
+            </div>
+          
+            <div class="business-info">
+                <h3 class="business-name">{{ profile.BussinesName }}</h3>
+              <img
+                class="logo-img"
+                *ngIf="profile.logoName"
+                [src]="profile.logoName"
+                alt="Логотип бизнеса"
+              />
+              
+            </div>
+          </div>
+          
     </ng-container>
   
     <ng-template #guestTemplate>
       <div class="guest-section">
         <h1>Добро пожаловать в нашу CRM-систему!</h1>
         <p>
-          Это современная платформа для управления клиентами, проектами и бизнес-аналитикой.
-          Вы сможете отслеживать активность клиентов, контролировать доходы и эффективно управлять персоналом.
+          Это современная платформа для управления клиентами, проектами и бизнес-аналитикой. Вы сможете отслеживать
+          активность клиентов, контролировать доходы и эффективно управлять персоналом.
         </p>
-        <p>
-          Зарегистрируйтесь или войдите в систему, чтобы начать использовать все возможности нашей CRM.
-        </p>
+        <p>Зарегистрируйтесь или войдите в систему, чтобы начать использовать все возможности нашей CRM.</p>
       </div>
     </ng-template>
   </div>

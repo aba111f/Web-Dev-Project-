@@ -1,41 +1,77 @@
-.homepage-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.name-photo-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
   }
   
-  .profile-section, .guest-section {
-    text-align: center;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #fefefe;
+  .profile-name {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #34495e;
+    margin: 0;
+    line-height: 1.2;
   }
   
-  .profile-img, .logo-img {
-    width: 150px;
-    height: 150px;
+  .profile-img {
+    width: 90px;
+    height: 90px;
     object-fit: cover;
-    border-radius: 12px;
-    margin: 10px auto;
-    display: block;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border-radius: 50%;
+    border: 3px solid #3498db;
   }
   
-  .business-info h3 {
-    margin-top: 10px;
-    font-size: 1.5em;
-    color: #333;
+  .business-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .logo-img {
+    width: 100%;
+    max-width: 90%;
+    max-height: 350px; 
+    object-fit: contain;
+    padding: 10px;
+    /* box-shadow: 0 4px 20px rgba(0,0,0,0.1); */
+  }
+  
+  .business-name {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: #2c3e50;
+    margin-top: 1rem; 
+    line-height: 1.2;
+  }
+  
+  .guest-section {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
   }
   
   .guest-section h1 {
-    color: #007bff;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
   }
   
   .guest-section p {
-    font-size: 1.1em;
-    color: #555;
-    margin-top: 10px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #34495e;
+    margin-bottom: 1.2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   

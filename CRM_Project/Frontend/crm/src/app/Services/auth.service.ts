@@ -106,4 +106,10 @@ export class AuthService {
   getLogoUrl(logoPath: string): string {
     return this.PhotoUrl + logoPath;
   }
+
+  getImageUrl(filename: string): string {
+    return 'http://127.0.0.1:8000/media/' + filename;
+  }
+
+  
 }
