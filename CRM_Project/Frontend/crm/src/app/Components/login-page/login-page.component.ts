@@ -31,7 +31,10 @@ export class LoginPageComponent implements OnDestroy {
     .subscribe(token => {
       this.service.logged();
       localStorage.setItem('user_id', token.user_id.toString());
-      this.router.navigate(['/profile']);
+      
+      this.router.navigate(['/profile']).then(() => {
+        window.location.reload();
+      });
 
     }
     );

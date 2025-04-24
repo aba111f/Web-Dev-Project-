@@ -75,7 +75,9 @@ export class AuthService {
     localStorage.removeItem('refresh');
     localStorage.removeItem('access');
     localStorage.removeItem('user_id');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
     this.isAuthenticatedSubject.next(false);
   }
 
