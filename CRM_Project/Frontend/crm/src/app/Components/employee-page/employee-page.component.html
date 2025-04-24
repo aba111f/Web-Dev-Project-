@@ -25,10 +25,10 @@
 
   <ul class="employee-list">
     <li *ngFor="let employee of employees">
-      <p [class.inactive]="!employee.is_active">{{ employee.FirstName }} {{ employee.LastName }}</p>
-      <p [class.inactive]="!employee.is_active">{{ employee.mail }}</p>
-      <p [class.inactive]="!employee.is_active">{{ employee.salary }}</p>
-      <p [class.inactive]="!employee.is_active">{{ employee.specialization }}</p>
+      <p [class.inactive]="!employee.is_active">Name: {{ employee.FirstName }} {{ employee.LastName }}</p>
+      <p [class.inactive]="!employee.is_active">email: {{ employee.mail }}</p>
+      <p [class.inactive]="!employee.is_active">salary: {{ employee.salary }}</p>
+      <p [class.inactive]="!employee.is_active">specialization: {{ employee.specialization }}</p>
       <button (click)="edit(employee)">✎</button>
       <button (click)="delete(employee)">✖</button>
     </li>
